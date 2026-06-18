@@ -1,5 +1,5 @@
 <?php 
-
+include_once __DIR__ . '/../Utils/Util.php';
 
 class Instructor{
    private $table_name;
@@ -24,8 +24,10 @@ class Instructor{
           $sql = 'INSERT INTO '. $this->table_name.'(username, first_name, last_name, email, date_of_birth, password) VALUES(?,?,?,?,?,?)';
           $stmt = $this->conn->prepare($sql);
           $res = $stmt->execute($data);
+          Util::log("DB INSERT executed for username={$data[0]}, result=" . ($res ? 'success' : 'failure'), 'instructor-add');
           return $res;
        }catch(PDOException $e){
+       	  Util::log("DB INSERT error for username={$data[0]}: " . $e->getMessage(), 'instructor-add');
        	  return 0;
        }
    }
@@ -45,10 +47,11 @@ class Instructor{
           $sql = 'SELECT username FROM '. $this->table_name.' WHERE username=?';
           $stmt = $this->conn->prepare($sql);
           $res = $stmt->execute([$user_name]);
-          if($stmt->rowCount() > 0) 
-          	return 0;
-          else return 1;
+          $unique = $stmt->rowCount() === 0;
+          Util::log("DB SELECT username unique check for {$user_name}: " . ($unique ? 'unique' : 'taken'), 'instructor-add');
+          return $unique ? 1 : 0;
        }catch(PDOException $e){
+       	  Util::log("DB SELECT error for username={$user_name}: " . $e->getMessage(), 'instructor-add');
        	  return 0;
        }
    }
@@ -108,6 +111,58 @@ class Instructor{
            return 0;
        }
    }
+
+   function getSomeByStatus($offset, $num, $status = 'all'){
+      try {
+          $sql = 'SELECT * FROM '. $this->table_name;
+          if ($status === 'active') {
+              $sql .= ' WHERE status = :status';
+          } else if ($status === 'inactive') {
+              $sql .= ' WHERE status = :status';
+          }
+          $sql .= ' LIMIT :offset, :l';
+
+          $stmt = $this->conn->prepare($sql);
+          if ($status === 'active') {
+              $stmt->bindValue(':status', 'Active');
+          } else if ($status === 'inactive') {
+              $stmt->bindValue(':status', 'Not Active');
+          }
+          $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+          $stmt->bindParam(':l', $num, PDO::PARAM_INT);
+          $stmt->execute();
+
+          if($stmt->rowCount() > 0) {
+               $users = $stmt->fetchAll();
+               return $users;
+         }else return 0;
+       }catch(PDOException $e){
+           return 0;
+       }
+   }
+
+   function countByStatus($status = 'all'){
+      try {
+          if ($status === 'active') {
+              $sql = 'SELECT instructor_id FROM '. $this->table_name .' WHERE status = :status';
+          } else if ($status === 'inactive') {
+              $sql = 'SELECT instructor_id FROM '. $this->table_name .' WHERE status = :status';
+          } else {
+              $sql = 'SELECT instructor_id FROM '. $this->table_name;
+          }
+
+          $stmt = $this->conn->prepare($sql);
+          if ($status === 'active') {
+              $stmt->bindValue(':status', 'Active');
+          } else if ($status === 'inactive') {
+              $stmt->bindValue(':status', 'Not Active');
+          }
+          $stmt->execute();
+          return $stmt->rowCount();
+       }catch(PDOException $e){
+           return 0;
+       }
+   }
    
    function active($val, $instr_id){
       try {
@@ -116,6 +171,17 @@ class Instructor{
           $res = $stmt->execute([$val, $instr_id]);
            return 1;
        }catch(PDOException $e){
+           return 0;
+       }
+   }
+
+   function delete($instr_id){
+       try {
+           $sql = 'DELETE FROM '. $this->table_name.' WHERE instructor_id=?';
+           $stmt = $this->conn->prepare($sql);
+           $res = $stmt->execute([$instr_id]);
+           return $res ? 1 : 0;
+       } catch(PDOException $e) {
            return 0;
        }
    }

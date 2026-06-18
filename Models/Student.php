@@ -23,7 +23,7 @@ class Student{
    
    function insert($data){
        try {
-          $sql = 'INSERT INTO '. $this->table_name.'(username, first_name, last_name, email, date_of_birth, password) VALUES(?,?,?,?,?,?)';
+          $sql = 'INSERT INTO '. $this->table_name.'(user_name, student_password, student_full_name, student_email, first_name, last_name, date_of_birth) VALUES(?,?,?,?,?,?,?)';
           $stmt = $this->conn->prepare($sql);
           $res = $stmt->execute($data);
           return $res;
@@ -33,7 +33,7 @@ class Student{
    }
    function is_username_unique($user_name){
        try {
-          $sql = 'SELECT username FROM '. $this->table_name.' WHERE username=?';
+          $sql = 'SELECT user_name FROM '. $this->table_name.' WHERE user_name=?';
           $stmt = $this->conn->prepare($sql);
           $res = $stmt->execute([$user_name]);
           if($stmt->rowCount() > 0) 
@@ -124,20 +124,20 @@ class Student{
 
    function authenticate($input_username, $input_password){
        try {
-          $sql = 'SELECT * FROM '. $this->table_name.' WHERE username=?';
+          $sql = 'SELECT * FROM '. $this->table_name.' WHERE user_name=?';
           $stmt = $this->conn->prepare($sql);
           $res = $stmt->execute([$input_username]);
           if($stmt->rowCount() == 1) {
             $student = $stmt->fetch();
-            $_username = $student["username"];
-            $_password = $student["password"];
+            $_username = $student["user_name"];
+            $_password = $student["student_password"];
 
 
             if($_username === $input_username ){
                if (password_verify($input_password, $_password)) {
                   $this->username =  $_username;
                   $this->student_id =  $student["student_id"];
-                  $this->email =  $student["email"];
+                  $this->email =  $student["student_email"];
                   $this->first_name =  $student["first_name"];
                   $this->last_name =  $student["last_name"];
                   return 1;

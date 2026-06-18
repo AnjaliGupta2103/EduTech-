@@ -35,7 +35,7 @@ if (isset($_SESSION['username']) &&
 
   <table class="table table-bordered">
       <tr>
-        <th>#Id</th>
+        <th>Id</th>
         <th>Full name</th>
         <th>Status</th>
         <th>Action</th>
@@ -43,7 +43,7 @@ if (isset($_SESSION['username']) &&
       <?php foreach ($courses as $course) {?>
       <tr>
       <td><?=$course["course_id"]?></td>
-       <td><a href="course.php?course_id=<?=$course["course_id"]?>"><?=$course["title"]?></a></td>
+       <td><a href="Course.php?course_id=<?=$course["course_id"]?>"><?=$course["title"]?></a></td>
        <td class="status"> <?=$course["status"]?></td>
        <td class="action_btn">
         <?php  

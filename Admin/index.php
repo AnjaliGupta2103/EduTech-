@@ -35,7 +35,7 @@ if (isset($_SESSION['username']) &&
 
   <table class="table table-bordered">
       <tr>
-        <th>#Id</th>
+        <th>Id</th>
         <th>Full name</th>
         <th>Status</th>
         <th>Block/ Unblock</th>

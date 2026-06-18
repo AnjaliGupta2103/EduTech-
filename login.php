@@ -14,52 +14,77 @@ include "Config.php";
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
-<!--  F444ff#f -->
-    <div class="wrapper">
-    	<div class="form-holder">
-    		<div class="logo">
-    			<img src="assets/img/Logo.png">
-    		     <h2>SIGN IN</h2>
-    		</div>
-    		<?php 
+<div class="login-wrapper">
+	<div class="login-container">
+		<!-- Header Card -->
+		<div class="login-header">
+			<div class="logo-section">
+				<img src="assets/img/Logo.png" alt="Logo" class="logo-img">
+				<h1 class="site-title"><?=SITE_NAME?></h1>
+			</div>
+			<p class="login-subtitle">Welcome back! Please sign in to your account</p>
+		</div>
+
+		<!-- Form Card -->
+		<div class="login-card">
+			<?php 
                 if (isset($_GET['error'])) { ?>
-                	<p class="error"><?=Validation::clean($_GET['error'])?></p>
+                	<div class="alert alert-error">
+                		<span class="alert-icon">⚠</span>
+                		<?=Validation::clean($_GET['error'])?>
+                	</div>
             <?php } ?>
-    		
-    		<form class="form"
-    		      action="Action/login.php" 
-    		      method="POST">
-    			<div class="form-group">
-    				<label>Username</label>
-    				<input type="text" 
-    				       name="username"
-    				       placeholder="User name"
-    				       value="">
-    			</div>
-    			<div class="form-group">
-    				<label>Password</label>
-    				<input type="password" 
-    				       name="password"
-    				       placeholder="Password"
-    				       value="">
-    			</div>
+            <?php 
+                if (isset($_GET['success'])) { ?>
+                	<div class="alert alert-success">
+                		<span class="alert-icon">✓</span>
+                		<?=Validation::clean($_GET['success'])?>
+                	</div>
+            <?php } ?>
+			
+			<form class="login-form" action="Action/login.php" method="POST">
 				<div class="form-group">
-					<label>Role:</label><br />
-    				<select name="role">
-					   <option value="Admin">Admin</option>
-					   <option value="Instructor">Instructor</option>
-					   <option value="Student">Student</option>
+					<label for="username" class="form-label">Username</label>
+					<input type="text" 
+					       id="username"
+					       name="username"
+					       class="form-input"
+					       placeholder="Enter your username"
+					       required>
+				</div>
+
+				<div class="form-group">
+					<label for="password" class="form-label">Password</label>
+					<input type="password" 
+					       id="password"
+					       name="password"
+					       class="form-input"
+					       placeholder="Enter your password"
+					       required>
+				</div>
+
+				<div class="form-group">
+					<label for="role" class="form-label">Sign in as</label>
+					<select id="role" name="role" class="form-select" required>
+						<option value="" disabled selected>Select your role</option>
+						<option value="Admin">Administrator</option>
+						<option value="Instructor">Instructor</option>
+						<option value="Student">Student</option>
 					</select>
-    			</div><br />
-    			<div class="form-group">
-    				<button type="submit">Login</button>
-    			</div>
-    			<div class="form-group">
-    				<a href="signup.php">Sign Up</a>
-    				<a href="index.php">| Home</a>
-    			</div>
-    		</form>
-    	</div>
-    </div>
+				</div>
+
+				<button type="submit" class="btn btn-primary btn-block">Sign In</button>
+			</form>
+
+			<div class="login-footer">
+				<p class="signup-text">
+					Don't have an account? 
+					<a href="signup.php" class="signup-link">Create one</a>
+				</p>
+				<a href="index.php" class="home-link">← Back to Home</a>
+			</div>
+		</div>
+	</div>
+</div>
 </body>
 </html>

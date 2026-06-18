@@ -291,7 +291,10 @@ class Course {
                 $stmt->execute([$instr_id]);
                 $instructor = $stmt->fetch();
 
-                $course["instructor_name"] = $instructor["first_name"]." ".$instructor["last_name"];
+                $course["instructor_name"] = "Unknown Instructor";
+                if ($instructor && is_array($instructor) && isset($instructor["first_name"]) && isset($instructor["last_name"])) {
+                    $course["instructor_name"] = $instructor["first_name"] . " " . $instructor["last_name"];
+                }
 
                 // get all chapters
                 $sql = 'SELECT * FROM chapter WHERE course_id=?';
@@ -305,8 +308,7 @@ class Course {
                 $stmt = $this->conn->prepare($sql);
                 $stmt->execute([$cour_id]);
                 $topic_nums = $stmt->rowCount();
-                $course["topic_nums"] = $chapter_nums;
-
+                $course["topic_nums"] = $topic_nums;
 
                 return $course;
             }

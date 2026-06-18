@@ -1,0 +1,10 @@
+[2026-06-17 21:46:06] instructor-add request received. username=Bipaschit3qe, first_name=Bipaschit, last_name=das, email=bipaschit@gmail.com, dob=2000-02-22
+[2026-06-17 21:46:06] checking username uniqueness for Bipaschit3qe
+[2026-06-17 21:46:06] DB SELECT username unique check for Bipaschit3qe: unique
+[2026-06-17 21:46:08] DB INSERT executed for username=Bipaschit3qe, result=success
+[2026-06-17 21:46:08] instructor inserted successfully: Bipaschit3qe
+[2026-06-17 21:47:05] instructor-add request received. username=aryan37g, first_name=aryan, last_name=gupta, email=aryan@gmail.com, dob=2005-07-30
+[2026-06-17 21:47:05] checking username uniqueness for aryan37g
+[2026-06-17 21:47:05] DB SELECT username unique check for aryan37g: unique
+[2026-06-17 21:47:06] DB INSERT executed for username=aryan37g, result=success
+[2026-06-17 21:47:06] instructor inserted successfully: aryan37g

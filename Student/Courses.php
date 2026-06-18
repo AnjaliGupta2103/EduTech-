@@ -35,24 +35,33 @@ if (isset($_SESSION['username']) &&
 
     <?php foreach ($courses as $course) {?>
     
-    <div class="card mb-3 course">
-    <div class="row g-0">
-      <div class="col-md-4">
-        <img src="../Upload/thumbnail/<?=$course["cover"]?>" 
-             class="img-fluid rounded-start" 
-             alt="course"
-             width="500">
-      </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <h5 class="card-title"><?=$course["title"]?></h5>
-          <p class="card-text"><?=$course["description"]?></p>
-          <p class="card-text"><small class="text-body-secondary"><?=$course["created_at"]?></small></p>
-          <a href="Course.php?course_id=<?=$course["course_id"]?>" class="btn btn-primary">View Course</a>
+    <?php
+      $coverUrl = !empty($course["cover"]) ? $course["cover"] : "default_course.jpg";
+      $courseDescription = strlen($course["description"]) > 150 ? substr($course["description"], 0, 150) . "..." : $course["description"];
+      $createdAt = !empty($course["created_at"]) ? date("M d, Y", strtotime($course["created_at"])) : "Unknown date";
+    ?>
+    <div class="card mb-4 shadow-sm course-card">
+      <div class="row g-0 align-items-center">
+        <div class="col-md-4">
+          <img src="../Upload/thumbnail/<?=$coverUrl?>" 
+               class="img-fluid rounded-start h-100 w-100 object-fit-cover" 
+               alt="<?=$course["title"]?>">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body d-flex flex-column h-100">
+            <h5 class="card-title mb-2"><?=$course["title"]?></h5>
+            <p class="card-text text-muted mb-3"><?=$courseDescription?></p>
+            <div class="mb-3 small text-secondary">
+              <span class="me-3">Created: <?=$createdAt?></span>
+            </div>
+            <div class="mt-auto d-flex gap-2">
+              <a href="Course.php?course_id=<?=$course["course_id"]?>" class="btn btn-primary btn-sm">View Course</a>
+              <a href="Course.php?course_id=<?=$course["course_id"]?>" class="btn btn-outline-secondary btn-sm">Enroll</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   <?php } ?>
   </div>
 <?php }else{ ?>

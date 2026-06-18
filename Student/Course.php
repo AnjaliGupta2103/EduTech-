@@ -26,39 +26,41 @@ if (isset($_SESSION['username']) &&
   <!-- NavBar -->
   <?php include "inc/NavBar.php"; ?>
 
-  <h4 class="course-list-title"></h4>
-  <div class="card" style="max-width: 700px;">
-    <div class="card-body">
-      
-      <h5 class="card-title">Course Title: <?=$course['title']?></h5>
-      <h5 class="card-title pt-3">Course Description: </h5>
-      <p class="card-text">
-        <?=$course['description']?>
-      </p>
-    </div>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item">Lessons  :  <?=$course['topic_nums']?></li>
-        <li class="list-group-item">Chapters:   <?=$course['chapter_nums']?></li>
-        <li class="list-group-item">Instructor: <?=$course['instructor_name']?></li>
-        <li class="list-group-item">Created at: <mark><?=$course['created_at']?></mark></li>
-        <li class="list-group-item"><mark>Certificate After Complete The Course</mark></li>
-      </ul>
-    <div class="card-body">
-      <?php if( $course['topic_nums'] > 0) { ?>
-        <a href="Action/Courses-Enrolled.php?course_id=<?=$course['course_id']?>" class="btn btn-success">Enroll Courses</a> 
-     <?php } ?>
-      
-    </div>
-      <?php if ($course["cover"] != "default_course.jpg") { ?>
-    
-      <div>
-        <img src="../Upload/thumbnail/<?=$course["cover"]?>" 
-             class="img-fluid rounded-start" 
-             alt="course"
-             width="100%">
+  <?php
+    $coverUrl = !empty($course['cover']) ? $course['cover'] : 'default_course.jpg';
+    $topicCount = isset($course['topic_nums']) ? (int)$course['topic_nums'] : 0;
+    $chapterCount = isset($course['chapter_nums']) ? (int)$course['chapter_nums'] : 0;
+    $instructorName = !empty($course['instructor_name']) ? $course['instructor_name'] : 'Unknown Instructor';
+    $createdAt = !empty($course['created_at']) ? date('M d, Y', strtotime($course['created_at'])) : 'Unknown date';
+  ?>
+  <div class="card course-detail-card mx-auto mb-4" style="max-width: 900px;">
+    <div class="row g-0">
+      <div class="col-md-5">
+        <img src="../Upload/thumbnail/<?=$coverUrl?>" 
+             class="img-fluid rounded-start h-100 w-100 object-fit-cover" 
+             alt="<?=$course['title']?>">
       </div>
-      <?php } ?>
-</div>
+      <div class="col-md-7">
+        <div class="card-body d-flex flex-column h-100">
+          <h4 class="card-title mb-3"><?=htmlspecialchars($course['title'])?></h4>
+          <p class="card-text text-muted mb-4"><?=nl2br(htmlspecialchars($course['description']))?></p>
+          <div class="mb-3">
+            <span class="d-block mb-2"><strong>Lessons:</strong> <?=$topicCount?></span>
+            <span class="d-block mb-2"><strong>Chapters:</strong> <?=$chapterCount?></span>
+            <span class="d-block mb-2"><strong>Instructor:</strong> <?=$instructorName?></span>
+            <span class="d-block"><strong>Created:</strong> <?=$createdAt?></span>
+          </div>
+          <div class="mt-auto">
+            <?php if ($topicCount > 0) { ?>
+              <a href="Action/Courses-Enrolled.php?course_id=<?=$course['course_id']?>" class="btn btn-success me-2">Enroll in Course</a>
+            <?php } else { ?>
+              <button class="btn btn-secondary" disabled>Course content coming soon</button>
+            <?php } ?>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
  <!-- Footer -->

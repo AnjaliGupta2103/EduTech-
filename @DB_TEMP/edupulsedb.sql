@@ -205,7 +205,7 @@ INSERT INTO `enrolled_student` (`enrolled_id`, `course_id`, `student_id`, `enrol
 --
 
 CREATE TABLE `instructor` (
-  `instructor_id` int(11) NOT NULL,
+  `instructor_id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) NOT NULL,
   `password` varchar(1023) NOT NULL,
   `first_name` varchar(255) NOT NULL,
@@ -214,7 +214,8 @@ CREATE TABLE `instructor` (
   `date_of_birth` date NOT NULL,
   `date_of_joined` date NOT NULL,
   `status` enum('Active','Not Active') NOT NULL DEFAULT 'Active',
-  `profile_img` varchar(255) NOT NULL DEFAULT 'default.jpg'
+  `profile_img` varchar(255) NOT NULL DEFAULT 'default.jpg',
+  PRIMARY KEY (`instructor_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --

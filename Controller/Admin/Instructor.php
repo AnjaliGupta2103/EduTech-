@@ -6,22 +6,30 @@ include "../Models/Course.php";
 include "../Database.php";
 
 
-function getSomeInstructors($offset, $num){
-
-	$db = new Database();
-      $db_conn = $db->connect();
-	$student_models = new Instructor($db_conn);
-
-	$data = $student_models->getSome($offset, $num);
-	
-	return $data;
+function normalizeInstructorStatus($status){
+    $status = strtolower(trim($status));
+    if ($status === 'active' || $status === 'inactive' || $status === 'all') {
+        return $status;
+    }
+    return 'all';
 }
 
-function getCount(){
-	$db = new Database();
+function getSomeInstructors($offset, $num, $status = 'all'){
+
+    $db = new Database();
       $db_conn = $db->connect();
-	$student_models = new Instructor($db_conn);
-	$res = $student_models->count();
+    $student_models = new Instructor($db_conn);
+
+    $data = $student_models->getSomeByStatus($offset, $num, normalizeInstructorStatus($status));
+    
+    return $data;
+}
+
+function getCount($status = 'all'){
+    $db = new Database();
+      $db_conn = $db->connect();
+    $student_models = new Instructor($db_conn);
+    $res = $student_models->countByStatus(normalizeInstructorStatus($status));
 	return $res;
 }
 
