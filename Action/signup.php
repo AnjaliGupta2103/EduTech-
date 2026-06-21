@@ -43,8 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
        if($user->is_username_unique($username)){
 	       	// password hash
 	       $password = password_hash($password, PASSWORD_DEFAULT);
-	       $full_name = trim($first_name . ' ' . $last_name);
-	       $user_data = [$username, $password, $full_name, $email, $first_name, $last_name, $date_of_birth];
+	       $user_data = [$username, $password, $first_name, $last_name, $email, $date_of_birth];
 	       $res = $user->insert($user_data);
 	       if ($res) {
 	       	$sm = "Successfully registered!";

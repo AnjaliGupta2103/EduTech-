@@ -24,3 +24,11 @@ This project is an **Online Learning System** built using **PHP** and **MySQL**.
 ##  ADMIN
 - Username: admin
 - Password: Test@pass1
+  
+##  STUDENT
+- Username: studentdemo3
+- Password: Student@123
+
+##  INSTRUCTOR
+- Username: demo_instructor
+- Password: Instructor123!

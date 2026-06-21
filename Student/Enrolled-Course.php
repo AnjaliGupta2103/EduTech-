@@ -21,30 +21,35 @@ if (isset($_SESSION['username']) &&
   <?php include "inc/NavBar.php"; ?>
 
   <?php if ($row_count > 0) { ?>
-  <h4 class="course-list-title">All Enrolled Courses (<?=$row_count?>)</h4>
+  <section class="course-page-header">
+    <div>
+      <p class="eyebrow">My Learning</p>
+      <h3>Enrolled Courses <span>(<?=$row_count?>)</span></h3>
+    </div>
+    <a href="Courses.php" class="btn btn-outline-primary">Browse All Courses</a>
+  </section>
   <div class="course-list">
 
     <?php 
       for ($i=1; $i <= $row_count; $i++) { ?>
     
-    <div class="card mb-3 course">
-    <div class="row g-0">
-      <div class="col-md-4">
-        <img src="../Upload/thumbnail/<?=$courses[$i]["cover"]?>" 
-             class="img-fluid rounded-start" 
-             alt="course"
-             width="500">
+    <div class="course-card shadow-sm">
+      <div class="course-card-image-wrap">
+        <img src="../Upload/thumbnail/<?=$courses[$i]["cover"]?>" alt="<?=$courses[$i]["title"]?>">
+        <span class="course-card-badge success">Enrolled</span>
       </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <h5 class="card-title"><?=$courses[$i]["title"]?></h5>
-          <p class="card-text"><?=$courses[$i]["description"]?></p>
-          <p class="card-text"><small class="text-body-secondary"><?=$courses[$i]["created_at"]?></small></p>
-          <a href="Courses-Enrolled.php?course_id=<?=$courses[$i]["course_id"]?>" class="btn btn-primary">View Course</a>
+      <div class="course-card-body">
+        <div class="course-card-meta">
+          <span><i class="fa fa-calendar"></i> <?=$courses[$i]["created_at"]?></span>
+          <span><i class="fa fa-check-circle"></i> In Progress</span>
+        </div>
+        <h5><?=$courses[$i]["title"]?></h5>
+        <p><?=$courses[$i]["description"]?></p>
+        <div class="course-card-actions">
+          <a href="Courses-Enrolled.php?course_id=<?=$courses[$i]["course_id"]?>" class="btn btn-primary btn-sm">Continue</a>
         </div>
       </div>
     </div>
-  </div>
   <?php } ?>
   </div>
 <?php }else{ ?>

@@ -394,12 +394,6 @@ ALTER TABLE `enrolled_student`
   ADD KEY `student_id` (`student_id`);
 
 --
--- Indexes for table `instructor`
---
-ALTER TABLE `instructor`
-  ADD PRIMARY KEY (`instructor_id`);
-
---
 -- Indexes for table `student`
 --
 ALTER TABLE `student`

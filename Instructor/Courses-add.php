@@ -24,138 +24,158 @@ if (isset($_SESSION['username']) &&
 <div class="container">
   <!-- NavBar -->
   <?php include "inc/NavBar.php"; ?>
-    <!-- Form for creating a course -->
-    <div class="mt-5" style="max-width: 800px;">
-    <form id="courseForm" 
-          class="mt-5"
-          action="Action/course-add.php"
-          method="POST"
-          enctype="multipart/form-data">
-         <?php if (isset($_GET['error'])) { ?>
-        <p class="alert alert-warning"><?=Validation::clean($_GET['error'])?></p>
+
+  <div class="course-create-page">
+    <section class="course-create-header">
+      <div>
+        <p class="eyebrow">Instructor Panel</p>
+        <h3 class="mb-1">Create Course Content</h3>
+      </div>
+    </section>
+
+    <div class="course-create-grid">
+      <form id="courseForm"
+            class="course-create-card shadow-sm"
+            action="Action/course-add.php"
+            method="POST"
+            enctype="multipart/form-data">
+        <?php if (isset($_GET['error'])) { ?>
+          <p class="alert alert-warning rounded-3 mb-3"><?=Validation::clean($_GET['error'])?></p>
         <?php } ?>
-        <?php 
-        if (isset($_GET['success'])) { ?>
-        <p class="alert alert-success"><?=Validation::clean($_GET['success'])?></p>
+        <?php if (isset($_GET['success'])) { ?>
+          <p class="alert alert-success rounded-3 mb-3"><?=Validation::clean($_GET['success'])?></p>
         <?php } ?>
-        <h2>Create a New Course</h2>
-        <div class="mb-3" >
-            <label for="courseTitle" class="form-label">Course Title</label>
-            <input type="text" 
-                   class="form-control" 
-                   id="courseTitle" 
-                   name="title"
-                   placeholder="Enter course title" 
-                   value="<?=$title?>"
-                   required />
-        </div>
-        <div class="mb-3">
-            <label for="courseDescription" class="form-label">Course Description</label>
-            <textarea class="form-control" 
-                      id="courseDescription" 
-                      rows="4" 
-                      name="description" 
-                      placeholder="Enter course description" 
-                      required ><?=$description?></textarea>
-        </div>
-        <div class="mb-3">
-            <label for="Cover" class="form-label">Cover Image</label>
-            <input type="file" class="form-control" 
-                   id="Cover" placeholder="Enter course title" 
-                   name="cover" />
+
+        <div class="course-create-card-top">
+          <span class="course-create-pill">Step 1</span>
+          <h4 class="mb-0">Create a New Course</h4>
         </div>
 
-        <button type="submit" class="btn btn-primary">Create Course</button>
-    </form>
-
-    <hr>
-
-    <!-- Form for creating chapters linked to a specific course -->
-    <form id="Chapter" 
-          class="mt-5"
-          action="Action/course-chapter-add.php"
-          method="POST">
-        <h2>Create a New Chapter</h2>
         <div class="mb-3">
-            <label for="courseSelect" class="form-label">Select Course</label>
-            <select class="form-select" id="courseSelect" name="course_id" required>
-                <?php if ($courses) { ?>
-                    <?php foreach ($courses as $course) { ?>
-                        <option value="<?=$course['course_id']?>"><?=$course['title']?></option>
-                    <?php }?>
-                <?php } ?>
-            </select>
+          <label for="courseTitle" class="form-label fw-semibold">Course Title</label>
+          <input type="text"
+                 class="form-control form-control-lg"
+                 id="courseTitle"
+                 name="title"
+                 placeholder="Enter course title"
+                 value="<?=$title?>"
+                 required />
         </div>
-        <div class="mb-3">
-            <label for="chapterTitle" class="form-label">Chapter Title</label>
-            <input type="text" 
-                   class="form-control" 
-                   id="chapterTitle" 
-                   placeholder="Enter chapter title" 
-                   name="chapter_title" 
-                   required>
-        </div>
-        <button type="submit" class="btn btn-primary">Create Chapter</button>
-    </form>
 
-    <hr>
+        <div class="mb-3">
+          <label for="courseDescription" class="form-label fw-semibold">Course Description</label>
+          <textarea class="form-control"
+                    id="courseDescription"
+                    rows="5"
+                    name="description"
+                    placeholder="Enter course description"
+                    required ><?=$description?></textarea>
+        </div>
 
+        <div class="mb-3">
+          <label for="Cover" class="form-label fw-semibold">Cover Image</label>
+          <input type="file"
+                 class="form-control"
+                 id="Cover"
+                 name="cover" />
+        </div>
 
-    <form id="Topic" 
-          class="mt-5"
-          action="Action/course-topic-add.php"
-          method="POST">
-        <h2>Create a New Topic</h2>
-        <div class="mb-3">
-            <label for="courseSelectTopic" class="form-label">Select Course</label>
-            <select class="form-select" id="courseSelectTopic" name="course_id" required>
-               <?php if ($courses) { ?>
-                    <?php foreach ($courses as $course) { ?>
-                        <option value="<?=$course['course_id']?>"><?=$course['title']?></option>
-                    <?php }?>
-                <?php } ?>
-            </select>
+        <button type="submit" class="btn btn-primary px-4">Create Course</button>
+      </form>
+
+      <form id="Chapter"
+            class="course-create-card shadow-sm"
+            action="Action/course-chapter-add.php"
+            method="POST">
+        <div class="course-create-card-top">
+          <span class="course-create-pill">Step 2</span>
+          <h4 class="mb-0">Create a New Chapter</h4>
         </div>
+
         <div class="mb-3">
-            <label for="chapterSelect" class="form-label">Select Chapter</label>
-            <select class="form-select" 
-                    id="chapterSelect" 
-                    name="chapter_id" 
-                    required>
-            </select>
+          <label for="courseSelect" class="form-label fw-semibold">Select Course</label>
+          <select class="form-select" id="courseSelect" name="course_id" required>
+            <?php if ($courses) { ?>
+              <?php foreach ($courses as $course) { ?>
+                <option value="<?=$course['course_id']?>"><?=$course['title']?></option>
+              <?php } ?>
+            <?php } ?>
+          </select>
         </div>
+
         <div class="mb-3">
-            <label for="topicTitle" class="form-label">Topic Title</label>
-            <input type="text" 
-                   class="form-control" 
-                   id="topicTitle" 
-                   placeholder="Enter topic title" 
-                   name="topic_title" 
-                   required>
+          <label for="chapterTitle" class="form-label fw-semibold">Chapter Title</label>
+          <input type="text"
+                 class="form-control"
+                 id="chapterTitle"
+                 placeholder="Enter chapter title"
+                 name="chapter_title"
+                 required>
         </div>
-        <button type="submit" class="btn btn-primary">Create Topic</button>
-    </form>
-   </div>
+
+        <button type="submit" class="btn btn-primary px-4">Create Chapter</button>
+      </form>
+
+      <form id="Topic"
+            class="course-create-card shadow-sm"
+            action="Action/course-topic-add.php"
+            method="POST">
+        <div class="course-create-card-top">
+          <span class="course-create-pill">Step 3</span>
+          <h4 class="mb-0">Create a New Topic</h4>
+        </div>
+
+        <div class="mb-3">
+          <label for="courseSelectTopic" class="form-label fw-semibold">Select Course</label>
+          <select class="form-select" id="courseSelectTopic" name="course_id" required>
+            <?php if ($courses) { ?>
+              <?php foreach ($courses as $course) { ?>
+                <option value="<?=$course['course_id']?>"><?=$course['title']?></option>
+              <?php } ?>
+            <?php } ?>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="chapterSelect" class="form-label fw-semibold">Select Chapter</label>
+          <select class="form-select"
+                  id="chapterSelect"
+                  name="chapter_id"
+                  required>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="topicTitle" class="form-label fw-semibold">Topic Title</label>
+          <input type="text"
+                 class="form-control"
+                 id="topicTitle"
+                 placeholder="Enter topic title"
+                 name="topic_title"
+                 required>
+        </div>
+
+        <button type="submit" class="btn btn-primary px-4">Create Topic</button>
+      </form>
+    </div>
+  </div>
 </div>
 
-
-</div>
 <script src="../assets/js/jquery-3.5.1.min.js"></script>
 <script type="text/javascript">
     $("#courseSelectTopic").change(function(){
-        $courseSelectTopicVal = $("#courseSelectTopic").val();
-        $.post("Action/load-chapters.php", 
-              {'course_id': $courseSelectTopicVal}, 
+        var $courseSelectTopicVal = $("#courseSelectTopic").val();
+        $.post("Action/load-chapters.php",
+              {'course_id': $courseSelectTopicVal},
               function(data, status){
                     if(status == "success"){
-                       
                         if (data != 0) {
-                        $("#chapterSelect").html(data);
-                    }else {
-                         alert("First create Capter");
-                         $("#chapterSelect").html("");
+                            $("#chapterSelect").html(data);
+                        } else {
+                            alert("First create a chapter");
+                            $("#chapterSelect").html("");
+                        }
                     }
-                }
         });
     });
 </script>

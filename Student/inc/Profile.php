@@ -1,24 +1,34 @@
-<div class="side-by-side mt-5">
-    <div class="l-side shadow p-3 ">
-      <div class="profile">
-        <img src="../Upload/profile/<?=$student['profile_img']?>" class="circle" alt="PROFILE IMG" width="250">
-        <form action="Action/upload-profile.php" 
-              class="text-center"
-              enctype="multipart/form-data"
-              method="POST">
-          <input type="file" 
-                 class="form-control mb-1" 
-                 name="profile_picture">
-          <input type="submit"
-                 value="Change Profile Picture"
-                 class="btn btn-primary w-100">
-        </form>
-        <h4 class="text-center pt-2"><b><?=$student['username']?></b></h4>
+<?php
+$currentPage = basename($_SERVER['PHP_SELF']);
+?>
+<div class="profile-page d-flex gap-4 flex-wrap align-items-start">
+  <div class="profile-sidebar-modern shadow-sm">
+    <div class="profile-sidebar-top">
+      <div class="profile-avatar-wrap">
+        <img src="../Upload/profile/<?= htmlspecialchars($student['profile_img']) ?>" class="profile-avatar" alt="Profile image">
       </div>
-      <ul class="list-group">
-          <li class="list-group-item"><a href="Profile-View.php" class="btn badge-primary">View Profile</a></li>
-          <li class="list-group-item"><a href="Profile-Edit.php" class="btn badge-primary">Edit Profile</a></li>
-          <li class="list-group-item"><a href="Profile-Edit.php#ChangePassword" class="btn badge-primary">Change Password</a></li>
-          <li class="list-group-item" ><a href="../Logout.php" class="btn badge-primary">Logout</a></li>
-        </ul>
+      <h4 class="mt-3 mb-1"><?= htmlspecialchars($student['username']) ?></h4>
+      <p class="profile-user-email mb-2"><?= htmlspecialchars($student['email']) ?></p>
+      <span class="profile-role">Student</span>
     </div>
+    <div class="profile-sidebar-links">
+      <a href="Profile-View.php" class="<?= $currentPage === 'Profile-View.php' ? 'active' : '' ?>">
+        <i class="fa fa-user"></i> <span>View Profile</span>
+      </a>
+      <a href="Profile-Edit.php" class="<?= $currentPage === 'Profile-Edit.php' ? 'active' : '' ?>">
+        <i class="fa fa-edit"></i> <span>Edit Profile</span>
+      </a>
+      <a href="Profile-Edit.php#ChangePassword">
+        <i class="fa fa-lock"></i> <span>Change Password</span>
+      </a>
+      <a href="../Logout.php">
+        <i class="fa fa-sign-out"></i> <span>Logout</span>
+      </a>
+    </div>
+    <form action="Action/upload-profile.php" method="POST" enctype="multipart/form-data" class="profile-upload-form">
+      <input type="file" class="form-control form-control-sm" name="profile_picture">
+      <button type="submit" class="btn btn-light btn-sm w-100 mt-2">Upload Photo</button>
+    </form>
+  </div>
+
+  <div class="profile-content-panel">

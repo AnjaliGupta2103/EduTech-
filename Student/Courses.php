@@ -5,6 +5,7 @@ if (isset($_SESSION['username']) &&
     isset($_SESSION['student_id'])) {
 
     include "../Controller/Student/Course.php";
+    include "../Controller/Student/EnrolledStudent.php";
     $row_count = getCount();
     
     $page = 1;
@@ -30,35 +31,42 @@ if (isset($_SESSION['username']) &&
   <!-- NavBar -->
   <?php include "inc/NavBar.php"; ?>
   <?php if ($courses) { ?>
-  <h4 class="course-list-title">All Courses (<?=$row_count?>)</h4>
+  <section class="course-page-header">
+    <div>
+      <p class="eyebrow">Learning Hub</p>
+      <h3>All Courses <span>(<?=$row_count?>)</span></h3>
+    </div>
+    <a href="Enrolled-Course.php" class="btn btn-outline-primary">My Enrolled Courses</a>
+  </section>
   <div class="course-list">
 
-    <?php foreach ($courses as $course) {?>
+    <?php foreach ($courses as $course) {?> 
     
     <?php
       $coverUrl = !empty($course["cover"]) ? $course["cover"] : "default_course.jpg";
       $courseDescription = strlen($course["description"]) > 150 ? substr($course["description"], 0, 150) . "..." : $course["description"];
       $createdAt = !empty($course["created_at"]) ? date("M d, Y", strtotime($course["created_at"])) : "Unknown date";
+      $isEnrolled = check_enrolled_student([$course["course_id"], $_SESSION['student_id']]);
     ?>
-    <div class="card mb-4 shadow-sm course-card">
-      <div class="row g-0 align-items-center">
-        <div class="col-md-4">
-          <img src="../Upload/thumbnail/<?=$coverUrl?>" 
-               class="img-fluid rounded-start h-100 w-100 object-fit-cover" 
-               alt="<?=$course["title"]?>">
+    <div class="course-card shadow-sm">
+      <div class="course-card-image-wrap">
+        <img src="../Upload/thumbnail/<?=$coverUrl?>" alt="<?=$course["title"]?>">
+        <span class="course-card-badge">Popular</span>
+      </div>
+      <div class="course-card-body">
+        <div class="course-card-meta">
+          <span><i class="fa fa-calendar"></i> <?=$createdAt?></span>
+          <span><i class="fa fa-clock-o"></i> Self-paced</span>
         </div>
-        <div class="col-md-8">
-          <div class="card-body d-flex flex-column h-100">
-            <h5 class="card-title mb-2"><?=$course["title"]?></h5>
-            <p class="card-text text-muted mb-3"><?=$courseDescription?></p>
-            <div class="mb-3 small text-secondary">
-              <span class="me-3">Created: <?=$createdAt?></span>
-            </div>
-            <div class="mt-auto d-flex gap-2">
-              <a href="Course.php?course_id=<?=$course["course_id"]?>" class="btn btn-primary btn-sm">View Course</a>
-              <a href="Course.php?course_id=<?=$course["course_id"]?>" class="btn btn-outline-secondary btn-sm">Enroll</a>
-            </div>
-          </div>
+        <h5><?=$course["title"]?></h5>
+        <p><?=$courseDescription?></p>
+        <div class="course-card-actions">
+          <a href="Course.php?course_id=<?=$course["course_id"]?>" class="btn btn-primary btn-sm">View Course</a>
+          <?php if ($isEnrolled) { ?>
+            <a href="Courses-Enrolled.php?course_id=<?=$course["course_id"]?>" class="btn btn-success btn-sm">Continue</a>
+          <?php } else { ?>
+            <a href="Action/Courses-Enrolled.php?course_id=<?=$course["course_id"]?>" class="btn btn-outline-secondary btn-sm">Enroll</a>
+          <?php } ?>
         </div>
       </div>
     </div>

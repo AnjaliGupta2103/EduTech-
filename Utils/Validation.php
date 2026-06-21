@@ -17,8 +17,8 @@ class Validation{
 	}
 	static function username($str){
 		// Must start with letter [A-Za-z]
-		// 5-20 characters total, letters and numbers only
-		$username_regex = "/^[A-Za-z][A-Za-z0-9]{4,19}$/";
+		// 5-20 characters total, allowing letters, numbers, underscores, dots, and hyphens
+		$username_regex = "/^[A-Za-z][A-Za-z0-9_.-]{4,19}$/";
 		if (preg_match($username_regex, $str)) 
 			return true;
         else return false;
