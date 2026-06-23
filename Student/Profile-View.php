@@ -15,6 +15,8 @@ if (isset($_SESSION['username']) &&
    }
    // get Certificates
    $certificates = getCertificate($_id);
+   $enrolledCoursesCount = getEnrolledCount($_id);
+   $certificateCount = count($certificates);
    $profileCompletion = 0;
    if (!empty($student['profile_img'])) $profileCompletion += 20;
    foreach (['first_name', 'last_name', 'email', 'date_of_birth'] as $field) {
@@ -42,9 +44,9 @@ if (isset($_SESSION['username']) &&
     </div>
 
     <div class="profile-overview-card">
-      <div class="profile-identity-block">
+      <div class="profile-overview-left">
         <img src="../Upload/profile/<?= htmlspecialchars($student['profile_img']) ?>" class="overview-avatar" alt="Profile image">
-        <div>
+        <div class="profile-identity-details">
           <div class="profile-pill-row">
             <span class="badge bg-success">Active Student</span>
             <span class="badge bg-light text-dark">Verified</span>
@@ -53,17 +55,37 @@ if (isset($_SESSION['username']) &&
           <p class="text-muted mb-0">@<?= htmlspecialchars($student['username']) ?></p>
         </div>
       </div>
-      <div class="profile-overview-actions">
-        <a href="Profile-Edit.php" class="btn btn-primary">Edit Profile</a>
-        <a href="Profile-Edit.php#ChangePassword" class="btn btn-outline-secondary">Change Password</a>
-      </div>
-      <div class="profile-completion">
-        <div class="d-flex justify-content-between align-items-center mb-2">
-          <span class="small text-muted">Profile completion</span>
-          <strong><?= $profileCompletion ?>%</strong>
+
+      <div class="profile-overview-center">
+        <div class="profile-overview-actions">
+          <a href="Profile-Edit.php" class="btn btn-primary">Edit Profile</a>
+          <a href="Profile-Edit.php#ChangePassword" class="btn btn-outline-secondary">Change Password</a>
         </div>
-        <div class="progress" style="height: 10px;">
-          <div class="progress-bar bg-primary" role="progressbar" style="width: <?= $profileCompletion ?>%"></div>
+      </div>
+
+      <div class="profile-overview-right">
+        <div class="profile-overview-summary">
+          <div class="profile-summary-item">
+            <small>Enrolled</small>
+            <strong><?= $enrolledCoursesCount ?> Courses</strong>
+          </div>
+          <div class="profile-summary-item">
+            <small>Certificates</small>
+            <strong><?= $certificateCount ?> Earned</strong>
+          </div>
+          <div class="profile-summary-item wide-item">
+            <small>Member Since</small>
+            <strong><?= htmlspecialchars($student['date_of_joined']) ?></strong>
+          </div>
+        </div>
+        <div class="profile-completion">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="small text-muted">Profile completion</span>
+            <strong><?= $profileCompletion ?>%</strong>
+          </div>
+          <div class="progress" style="height: 10px;">
+            <div class="progress-bar bg-primary" role="progressbar" style="width: <?= $profileCompletion ?>%"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -73,14 +95,14 @@ if (isset($_SESSION['username']) &&
         <span class="profile-stat-icon"><i class="fa fa-book"></i></span>
         <div>
           <small>Enrolled</small>
-          <strong><?= count($certificates) ?> Courses</strong>
+          <strong><?= $enrolledCoursesCount ?> Courses</strong>
         </div>
       </div>
       <div class="profile-stat-card success">
         <span class="profile-stat-icon"><i class="fa fa-certificate"></i></span>
         <div>
           <small>Certificates</small>
-          <strong><?= !empty($certificates) ? count($certificates) : 0 ?> Earned</strong>
+          <strong><?= $certificateCount ?> Earned</strong>
         </div>
       </div>
       <div class="profile-stat-card warning">
@@ -113,9 +135,9 @@ if (isset($_SESSION['username']) &&
         <div class="info-card certificate-panel">
           <div class="section-heading-row">
             <h5 class="mb-0">Certificates</h5>
-            <span class="badge bg-light text-dark"><?= !empty($certificates) ? count($certificates) : 0 ?></span>
+            <span class="badge bg-light text-dark"><?= $certificateCount ?></span>
           </div>
-          <?php if (!empty($certificates) && !empty($certificates[0]["certificate_id"])) { ?>
+          <?php if (!empty($certificates)) { ?>
             <ul class="certificate-list">
               <?php $i = 0; foreach ($certificates as $certificate) { $i++; ?>
                 <li>

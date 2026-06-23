@@ -22,17 +22,78 @@ if (isset($_SESSION['username']) &&
   <!-- NavBar & Profile-->
   <?php include "inc/NavBar.php"; 
         include "inc/Profile.php"; ?>
-    <div class="r-side p-5 shadow mx-2">
-      <h4>Account Information</h4>
-        <ul class="list-group" style="max-width: 600px;">
-          <li class="list-group-item">First name: <?=$instructor['first_name']?></li>
-          <li class="list-group-item">Last name: <?=$instructor['last_name']?></li>
-          <li class="list-group-item">Email: <?=$instructor['email']?></li>
-          <li class="list-group-item">Date of birth: <?=$instructor['date_of_birth']?></li>
-          <li class="list-group-item">Joined at: <?=$instructor['date_of_joined']?></li>
-           <li class="list-group-item p-3"></li>
-          <li class="list-group-item">Username: <?=$instructor['username']?></li>
-        </ul>
+      <div class="profile-overview-card">
+        <div class="profile-overview-left">
+          <img src="../Upload/profile/<?=$instructor['profile_img']?>" class="overview-avatar" alt="Profile image">
+          <div class="profile-identity-details">
+            <div class="profile-pill-row">
+              <span class="badge bg-info">Instructor</span>
+            </div>
+            <h4 class="mb-1"><?=$instructor['first_name']?> <?=$instructor['last_name']?></h4>
+            <p class="text-muted mb-0">@<?=$instructor['username']?></p>
+          </div>
+        </div>
+
+        <div class="profile-overview-center">
+          <div class="profile-overview-actions">
+            <a href="Profile-Edit.php" class="btn btn-primary">Edit Profile</a>
+            <a href="Profile-Edit.php#ChangePassword" class="btn btn-outline-secondary">Change Password</a>
+          </div>
+        </div>
+
+        <div class="profile-overview-right">
+          <div class="profile-overview-summary">
+            <div class="profile-summary-item">
+              <small>Member Since</small>
+              <strong><?=$instructor['date_of_joined']?></strong>
+            </div>
+            <div class="profile-summary-item">
+              <small>Email</small>
+              <strong><?=$instructor['email']?></strong>
+            </div>
+            <div class="profile-summary-item">
+              <small>Date of Birth</small>
+              <strong><?=$instructor['date_of_birth']?></strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-lg-12">
+          <div class="info-card">
+            <div class="section-heading-row">
+              <h5 class="mb-0">Account Information</h5>
+            </div>
+            <div class="info-grid">
+              <div class="info-item">
+                <strong>First Name</strong>
+                <span><?=htmlspecialchars($instructor['first_name'])?></span>
+              </div>
+              <div class="info-item">
+                <strong>Last Name</strong>
+                <span><?=htmlspecialchars($instructor['last_name'])?></span>
+              </div>
+              <div class="info-item">
+                <strong>Email</strong>
+                <span><?=htmlspecialchars($instructor['email'])?></span>
+              </div>
+              <div class="info-item">
+                <strong>Username</strong>
+                <span><?=htmlspecialchars($instructor['username'])?></span>
+              </div>
+              <div class="info-item">
+                <strong>Date of Birth</strong>
+                <span><?=htmlspecialchars($instructor['date_of_birth'])?></span>
+              </div>
+              <div class="info-item">
+                <strong>Joined At</strong>
+                <span><?=htmlspecialchars($instructor['date_of_joined'])?></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

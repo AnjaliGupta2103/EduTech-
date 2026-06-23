@@ -47,13 +47,29 @@ if (isset($_SESSION['username']) &&
       $em = "Invalid course id ";
       Util::redirect("Courses.php", "course_id", $course_id);
     }
+    
+    $all_chapters = count($course['chapters']);
+    $chapter_val = (1 / $all_chapters) * 100;
+    
+    // Update progress based on current chapter view
     $progress = getStudentProgress($course_id, $student_id);
+    
+    $i = 0;
+    foreach($course['chapters'] as $chapter) {
+        $i++;
+        if ($chapter['chapter_id'] == $_chapter_id) {
+            $progress_plus = ($chapter_val * $i);
+            if ($progress_plus >= $progress) {
+                updateStudentProgress($course_id, $student_id, $progress_plus);
+                $progress = $progress_plus;  // Update display value immediately
+            }
+            break;  // Exit loop once we find the current chapter
+        }
+    }
+    
     if ($progress >= 100) {
       $progress = 100;
     }
-
-    $all_chapters = count($course['chapters']);
-    $chapter_val = (1 / $all_chapters) * 100;
 
 
     # Header
@@ -73,16 +89,7 @@ if (isset($_SESSION['username']) &&
         <button id="sideBtn" class="btn btn-light btn-sm"><i class="fa fa-bars"></i></button>
       </div>
       <ul class="course-sidebar-menu" id="sideMenu">
-        <?php $i=0; foreach($course['chapters'] as $chapter) { $i++; 
-            if ($chapter['chapter_id'] == $_chapter_id) {
-                $progress_plus = ($chapter_val*$i);
-                $cureent =  $chapter_val *$i;
-                if ($cureent >= $progress) {
-                 updateStudentProgress($course_id, $student_id, $progress_plus);
-                }
-            }
-            
-        ?>
+        <?php $i=0; foreach($course['chapters'] as $chapter) { $i++; ?>
           <li class="course-sidebar-chapter">
             <a href="javascript:void()" class="course-sidebar-chapter-title">
               <?=$chapter['title']?></a>

@@ -2,6 +2,7 @@
 include "../Models/Student.php";
 include "../Models/Certificate.php";
 include "../Models/Course.php";
+include "../Models/EnrolledStudent.php";
 
 include "../Database.php";
 
@@ -33,6 +34,14 @@ function getById($student_id){
 	return $student->getData();
 }
 
+function getEnrolledCount($student_id){
+	$db = new Database();
+    $db_conn = $db->connect();
+	$enrolled_student = new EnrolledStudent($db_conn);
+	$data = $enrolled_student->getEnrolled($student_id);
+	return is_array($data) && isset($data[0]['count']) ? $data[0]['count'] : 0;
+}
+
 function getCertificate($student_id){
 
 	$db = new Database();
@@ -41,18 +50,17 @@ function getCertificate($student_id){
 	$certificates = $certificate_model->getAllByStudentId($student_id);
     
 	$course_model = new Course($db_conn);
-	$data[0] = array('certificate_id' => "", 
-			          'course_title' => ""
-	                     );
+	$data = array();
 	if ($certificates != 0) {
     for ($i=0; $i < count($certificates); $i++) { 
-    	$c_id = $certificates[$i]['course_id'];
-    	$certif_id = $certificates[$i]['certificate_id'];
+     	$c_id = $certificates[$i]['course_id'];
+     	$certif_id = $certificates[$i]['certificate_id'];
         $course = $course_model->getById($c_id);
         $course_title = $course["title"];
 
-		$data[$i] = array('certificate_id' => $certif_id, 
-			              'course_title' => $course_title,
+		$data[] = array(
+			          'certificate_id' => $certif_id,
+			          'course_title' => $course_title
 	                      );
     }
     }

@@ -33,19 +33,23 @@ if (isset($_SESSION['username']) &&
       </div>
     </section>
 
+    <?php if (isset($_GET['error'])) { ?>
+      <div class="alert alert-warning rounded-3 mb-4" role="alert">
+        <i class="fa fa-exclamation-circle"></i> <?=Validation::clean($_GET['error'])?>
+      </div>
+    <?php } ?>
+    <?php if (isset($_GET['success'])) { ?>
+      <div class="alert alert-success rounded-3 mb-4" role="alert">
+        <i class="fa fa-check-circle"></i> <?=Validation::clean($_GET['success'])?>
+      </div>
+    <?php } ?>
+
     <div class="course-create-grid">
       <form id="courseForm"
             class="course-create-card shadow-sm"
             action="Action/course-add.php"
             method="POST"
             enctype="multipart/form-data">
-        <?php if (isset($_GET['error'])) { ?>
-          <p class="alert alert-warning rounded-3 mb-3"><?=Validation::clean($_GET['error'])?></p>
-        <?php } ?>
-        <?php if (isset($_GET['success'])) { ?>
-          <p class="alert alert-success rounded-3 mb-3"><?=Validation::clean($_GET['success'])?></p>
-        <?php } ?>
-
         <div class="course-create-card-top">
           <span class="course-create-pill">Step 1</span>
           <h4 class="mb-0">Create a New Course</h4>
@@ -163,20 +167,32 @@ if (isset($_SESSION['username']) &&
 
 <script src="../assets/js/jquery-3.5.1.min.js"></script>
 <script type="text/javascript">
-    $("#courseSelectTopic").change(function(){
+    // Function to load chapters for the topic section
+    function loadChaptersForTopic() {
         var $courseSelectTopicVal = $("#courseSelectTopic").val();
-        $.post("Action/load-chapters.php",
-              {'course_id': $courseSelectTopicVal},
-              function(data, status){
-                    if(status == "success"){
-                        if (data != 0) {
-                            $("#chapterSelect").html(data);
-                        } else {
-                            alert("First create a chapter");
-                            $("#chapterSelect").html("");
+        if ($courseSelectTopicVal) {
+            $.post("Action/load-chapters.php",
+                  {'course_id': $courseSelectTopicVal},
+                  function(data, status){
+                        if(status == "success"){
+                            if (data != 0) {
+                                $("#chapterSelect").html(data);
+                            } else {
+                                $("#chapterSelect").html('<option value="">No chapters available. Create one first.</option>');
+                            }
                         }
-                    }
-        });
+            });
+        }
+    }
+
+    // Load chapters when course selection changes
+    $("#courseSelectTopic").change(function(){
+        loadChaptersForTopic();
+    });
+
+    // Load chapters on page load if course is selected
+    $(document).ready(function(){
+        loadChaptersForTopic();
     });
 </script>
  <!-- Footer -->

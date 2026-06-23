@@ -1,24 +1,23 @@
-<div class="side-by-side mt-5">
-    <div class="l-side shadow p-3 ">
-      <div class="profile">
-        <img src="../Upload/profile/<?=$instructor['profile_img']?>" class="circle" alt="PROFILE IMG" width="250">
-        <form action="Action/upload-profile.php" 
-              class="text-center"
-              enctype="multipart/form-data"
-              method="POST">
-          <input type="file" 
-                 class="form-control mb-1" 
-                 name="profile_picture">
-          <input type="submit"
-                 value="Change Profile Picture"
-                 class="btn btn-primary w-100">
-        </form>
-        <h4 class="text-center pt-2"><b><?=$instructor['username']?></b></h4>
+<div class="profile-page">
+  <div class="profile-sidebar-modern">
+    <div class="profile-sidebar-top">
+      <div class="profile-avatar-wrap">
+        <img src="../Upload/profile/<?=$instructor['profile_img']?>" class="profile-avatar" alt="PROFILE IMG">
       </div>
-      <ul class="list-group">
-          <li class="list-group-item"><a href="Profile-View.php" class="btn badge-primary">View Profile</a></li>
-          <li class="list-group-item"><a href="Profile-Edit.php" class="btn badge-primary">Edit Profile</a></li>
-          <li class="list-group-item"><a href="Profile-Edit.php#ChangePassword" class="btn badge-primary">Change Password</a></li>
-          <li class="list-group-item" ><a href="../Logout.php" class="btn badge-primary">Logout</a></li>
-        </ul>
+      <h5 class="mb-2 mt-3"><?=$instructor['first_name']?> <?=$instructor['last_name']?></h5>
+      <p class="profile-user-email mb-0">@<?=$instructor['username']?></p>
     </div>
+    <div class="profile-sidebar-links">
+      <a href="Profile-View.php"><i class="fa fa-eye"></i> View Profile</a>
+      <a href="Profile-Edit.php"><i class="fa fa-edit"></i> Edit Profile</a>
+      <a href="Profile-Edit.php#ChangePassword"><i class="fa fa-lock"></i> Change Password</a>
+      <a href="../Logout.php"><i class="fa fa-sign-out"></i> Logout</a>
+    </div>
+    <div class="profile-upload-form px-3 pb-3">
+      <form action="Action/upload-profile.php" enctype="multipart/form-data" method="POST">
+        <input type="file" class="form-control form-control-sm mb-2" name="profile_picture">
+        <button type="submit" class="btn btn-sm btn-light w-100">Update Picture</button>
+      </form>
+    </div>
+  </div>
+  <div class="profile-content-panel">

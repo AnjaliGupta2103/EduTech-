@@ -45,53 +45,60 @@ if (isset($_SESSION['username']) &&
 <div class="container">
   <!-- NavBar -->
   <?php include "inc/NavBar.php"; ?>
-<div class="container mt-5">
 
-    <!-- Form for creating course content -->
-    <form class="border p-5"
-          action="Action/content-update.php"
-          method="POST">
-        <h4>Create / Edit Course Content</h4>
-          <div class="mb-3">
-            <label for="courseSelectTopic" class="form-label">Select Course</label>
-            <select class="form-select " id="courseSelectTopic" name="course_id" required >
+  <div class="content-create-page">
+    <section class="content-hero-card">
+      <div class="hero-copy">
+        <span class="hero-pill">Instructor Workspace</span>
+        <h3>Edit your course content</h3>
+        <p>Update the selected topic with fresh lessons and materials.</p>
+      </div>
+      <div class="hero-badge">Live editor</div>
+    </section>
+
+    <div class="content-update-card">
+      <form action="Action/content-update.php" method="POST" class="content-form">
+        <!-- Selection Row -->
+        <div class="content-selection-row">
+          <div class="selection-group">
+            <label class="selection-label"><i class="fa fa-book"></i> Course</label>
+            <select class="selection-select" id="courseSelectTopic" name="course_id" required>
                <option value="<?=$course['course']['course_id']?>"><?=$course['course']['title']?></option>
             </select>
-        </div>
-        <div class="mb-3">
-            <label for="chapterSelect" class="form-label">Select Chapter</label>
-            <select class="form-select" 
-                    id="chapterSelect" 
-                    name="chapter_id" 
-                    required >
+          </div>
+
+          <div class="selection-group">
+            <label class="selection-label"><i class="fa fa-layer-group"></i> Chapter</label>
+            <select class="selection-select" id="chapterSelect" name="chapter_id" required>
                <option value="<?=$chapter['chapter_id']?>"><?=$chapter['title']?></option>
-
             </select>
-        </div>
-         
-          <div class="mb-3">
-            <label for="topicSelect" class="form-label">Select Topic</label>
-            <select class="form-select" 
-                    id="topicSelect" 
-                    name="topic_id" 
-                    required >
+          </div>
+
+          <div class="selection-group">
+            <label class="selection-label"><i class="fa fa-file-text"></i> Topic</label>
+            <select class="selection-select" id="topicSelect" name="topic_id" required>
                <option value="<?=$topic['topic_id']?>"><?=$topic['title']?></option>
-
             </select>
+          </div>
         </div>
 
-        <div class="mb-3">
-            <label for="contentEditor" class="form-label">Course Content</label>
-            <textarea
-                   class="form-control text"
-                   name="text"
-                   id="contentEditor"><?=$course['content']['data']?></textarea>
-                   
+        <!-- Editor Section -->
+        <div class="editor-section">
+          <label for="contentEditor" class="editor-label">
+            <i class="fa fa-edit"></i> Course Content
+          </label>
+          <textarea class="form-control text" name="text" id="contentEditor"><?=$course['content']['data']?></textarea>
         </div>
-        <button type="submit" class="btn btn-primary" >Save Content</button>
-    </form>
 
-</div>
+        <!-- Action Row -->
+        <div class="editor-actions">
+          <button type="submit" class="btn btn-primary btn-save-content">
+            <i class="fa fa-check"></i> Save Content
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 
 <script type="text/javascript">
      $(document).ready(function() {

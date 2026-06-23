@@ -29,6 +29,9 @@ This project is an **Online Learning System** built using **PHP** and **MySQL**.
 - Username: studentdemo3
 - Password: Student@123
 
+- Username: bips2411
+- Password: Anjali123@
+
 ##  INSTRUCTOR
 - Username: demo_instructor
 - Password: Instructor123!
