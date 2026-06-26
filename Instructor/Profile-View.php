@@ -23,21 +23,24 @@ if (isset($_SESSION['username']) &&
   <?php include "inc/NavBar.php"; 
         include "inc/Profile.php"; ?>
       <div class="profile-overview-card">
-        <div class="profile-overview-left">
-          <img src="../Upload/profile/<?=$instructor['profile_img']?>" class="overview-avatar" alt="Profile image">
-          <div class="profile-identity-details">
-            <div class="profile-pill-row">
-              <span class="badge bg-info">Instructor</span>
+        <div class="profile-overview-top">
+          <div class="profile-overview-left">
+            <img src="../Upload/profile/<?=$instructor['profile_img']?>" class="overview-avatar" alt="Profile image">
+            <div class="profile-identity-details">
+              <div class="profile-pill-row">
+                <span class="badge bg-info">Instructor</span>
+                <span class="badge bg-light text-dark">Verified</span>
+              </div>
+              <h4 class="mb-1"><?=htmlspecialchars($instructor['first_name'])?> <?=htmlspecialchars($instructor['last_name'])?></h4>
+              <p class="text-muted mb-0">@<?=htmlspecialchars($instructor['username'])?></p>
             </div>
-            <h4 class="mb-1"><?=$instructor['first_name']?> <?=$instructor['last_name']?></h4>
-            <p class="text-muted mb-0">@<?=$instructor['username']?></p>
           </div>
-        </div>
 
-        <div class="profile-overview-center">
-          <div class="profile-overview-actions">
-            <a href="Profile-Edit.php" class="btn btn-primary">Edit Profile</a>
-            <a href="Profile-Edit.php#ChangePassword" class="btn btn-outline-secondary">Change Password</a>
+          <div class="profile-overview-center">
+            <div class="profile-overview-actions">
+              <a href="Profile-Edit.php" class="btn btn-primary">Edit Profile</a>
+              <a href="Profile-Edit.php#ChangePassword" class="btn btn-outline-secondary">Change Password</a>
+            </div>
           </div>
         </div>
 
@@ -45,15 +48,15 @@ if (isset($_SESSION['username']) &&
           <div class="profile-overview-summary">
             <div class="profile-summary-item">
               <small>Member Since</small>
-              <strong><?=$instructor['date_of_joined']?></strong>
+              <strong><?=htmlspecialchars($instructor['date_of_joined'])?></strong>
             </div>
             <div class="profile-summary-item">
               <small>Email</small>
-              <strong><?=$instructor['email']?></strong>
+              <strong><?=htmlspecialchars($instructor['email'])?></strong>
             </div>
             <div class="profile-summary-item">
               <small>Date of Birth</small>
-              <strong><?=$instructor['date_of_birth']?></strong>
+              <strong><?=htmlspecialchars($instructor['date_of_birth'])?></strong>
             </div>
           </div>
         </div>

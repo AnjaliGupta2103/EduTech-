@@ -21,10 +21,19 @@ if (isset($_SESSION['username']) &&
    $db = new Database();
    $conn = $db->connect();
    $course = new Course($conn);
-   $array_data = [$data, $course_id, $chapter_id, $topic_id];
-   $contents = $course->update_content($array_data);
+   $existingContent = $course->check_content([$course_id, $chapter_id, $topic_id]);
+
+   if ($existingContent != 0) {
+       $array_data = [$data, $course_id, $chapter_id, $topic_id];
+       $course->update_content($array_data);
+   } else {
+       $array_data = [$course_id, $chapter_id, $topic_id, $data];
+       $course->insert_content($array_data);
+   }
+
+   $_SESSION['content'] = "0,$topic_id,$chapter_id,$course_id";
    
-   Util::redirect("../Courses-content-update.php", "content_id", "");
+   Util::redirect("../Courses-content-edit-page.php", "success", "Updated content successfully", "course_id=$course_id&chapter_id=$chapter_id&topic_id=$topic_id");
 }
 }else {
       

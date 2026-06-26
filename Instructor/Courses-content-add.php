@@ -62,6 +62,7 @@ if (isset($_SESSION['username']) &&
               <i class="fa fa-book"></i> Course
             </label>
             <select class="form-select-compact" id="courseSelectTopic" name="course_id" required>
+               <option value="" selected>Select a course</option>
                <?php if ($courses) { ?>
                     <?php foreach ($courses as $course) { ?>
                         <option value="<?=$course['course_id']?>"><?=$course['title']?></option>
@@ -77,8 +78,9 @@ if (isset($_SESSION['username']) &&
             <select class="form-select-compact" 
                     id="chapterSelect" 
                     name="chapter_id" 
-                    required>
-              <option value="">Loading chapters...</option>
+                    required
+                    disabled>
+              <option value="">Select a chapter</option>
             </select>
           </div>
         </div>
@@ -90,7 +92,8 @@ if (isset($_SESSION['username']) &&
           <select class="form-select-compact" 
                   id="topicSelect" 
                   name="topic_id" 
-                  required>
+                  required
+                  disabled>
             <option value="">Select a chapter first</option>
           </select>
         </div>
@@ -106,29 +109,49 @@ if (isset($_SESSION['username']) &&
 
 <script type="text/javascript">
      $(document).ready(function() {
-         
+         var loadedCourseId = null;
+
     // Function to load chapters
     function loadChapters() {
         var courseSelectTopicVal = $("#courseSelectTopic").val();
-        if (courseSelectTopicVal) {
-            $.post("Action/load-chapters.php", 
-                  {'course_id': courseSelectTopicVal}, 
-                  function(data, status){
-                        if(status == "success"){
-                            if (data != 0) {
-                                $("#chapterSelect").html(data);
-                            } else {
-                                $("#chapterSelect").html('<option value="">No chapters available. Create one first.</option>');
-                            }
-                        }
-            });
+        if (!courseSelectTopicVal) {
+            $("#chapterSelect").html('<option value="">Select a chapter</option>');
+            $("#chapterSelect").prop('disabled', true);
+            $("#topicSelect").html('<option value="">Select a chapter first</option>');
+            $("#topicSelect").prop('disabled', true);
+            loadedCourseId = null;
+            return;
         }
+
+        if (loadedCourseId === courseSelectTopicVal) {
+            return;
+        }
+
+        $("#chapterSelect").prop('disabled', false);
+        $("#chapterSelect").html('<option value="">Loading chapters...</option>');
+        $("#topicSelect").html('<option value="">Select a chapter first</option>');
+        $("#topicSelect").prop('disabled', true);
+
+        $.post("Action/load-chapters.php", 
+              {'course_id': courseSelectTopicVal}, 
+              function(data, status){
+                    if(status == "success"){
+                        if (data != 0) {
+                            $("#chapterSelect").html('<option value="">Select a chapter</option>' + data);
+                        } else {
+                            $("#chapterSelect").html('<option value="">No chapters available. Create one first.</option>');
+                        }
+                        loadedCourseId = courseSelectTopicVal;
+                    }
+        });
     }
     
     // Function to load topics
     function loadTopics() {
         var chapterSelectTopicVal = $("#chapterSelect").val();
         if (chapterSelectTopicVal) {
+            $("#topicSelect").prop('disabled', false);
+            $("#topicSelect").html('<option value="">Loading topics...</option>');
             $.post("Action/load-topics.php", 
                   {'chapter_id': chapterSelectTopicVal}, 
                   function(data, status){
@@ -143,19 +166,18 @@ if (isset($_SESSION['username']) &&
         }
     }
     
-    // Load chapters on page load and when course changes
-    loadChapters();
-    
     $("#courseSelectTopic").change(function(){
         loadChapters();
-        $("#chapterSelect").html('<option value="">Loading chapters...</option>');
-        $("#topicSelect").html('<option value="">Select a chapter first</option>');
     });
 
-    // Load topics when chapter changes
+    $("#chapterSelect").on('focus', function(){
+        if ($("#courseSelectTopic").val()) {
+            loadChapters();
+        }
+    });
+
     $("#chapterSelect").change(function(){
         loadTopics();
-        $("#topicSelect").html('<option value="">Loading topics...</option>');
     });
 
   });

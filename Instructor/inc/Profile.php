@@ -1,5 +1,5 @@
-<div class="profile-page">
-  <div class="profile-sidebar-modern">
+<div class="profile-page instructor-profile-page">
+  <div class="profile-sidebar-modern instructor-sidebar-modern">
     <div class="profile-sidebar-top">
       <div class="profile-avatar-wrap">
         <img src="../Upload/profile/<?=$instructor['profile_img']?>" class="profile-avatar" alt="PROFILE IMG">
@@ -20,4 +20,4 @@
       </form>
     </div>
   </div>
-  <div class="profile-content-panel">
+  <div class="profile-content-panel instructor-profile-content-panel">

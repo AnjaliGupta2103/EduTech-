@@ -39,13 +39,19 @@ if (isset($_SESSION['username']) &&
       <div>
         <p class="eyebrow">Student Profile</p>
         <h3>My Profile</h3>
+        <p class="profile-subtitle">Track your learning journey, progress, and account details in one place.</p>
       </div>
-      <a href="Profile-Edit.php" class="btn btn-primary">Edit Profile</a>
+      <div class="profile-header-actions">
+        <a href="Profile-Edit.php" class="btn btn-primary">Edit Profile</a>
+        <a href="Profile-Edit.php#ChangePassword" class="btn btn-outline-secondary">Change Password</a>
+      </div>
     </div>
 
-    <div class="profile-overview-card">
+    <div class="profile-overview-card student-hero-card">
       <div class="profile-overview-left">
-        <img src="../Upload/profile/<?= htmlspecialchars($student['profile_img']) ?>" class="overview-avatar" alt="Profile image">
+        <div class="student-avatar-shell">
+          <img src="../Upload/profile/<?= htmlspecialchars($student['profile_img']) ?>" class="overview-avatar" alt="Profile image">
+        </div>
         <div class="profile-identity-details">
           <div class="profile-pill-row">
             <span class="badge bg-success">Active Student</span>
@@ -53,13 +59,7 @@ if (isset($_SESSION['username']) &&
           </div>
           <h4 class="mb-1"><?= htmlspecialchars($student['first_name']) . ' ' . htmlspecialchars($student['last_name']) ?></h4>
           <p class="text-muted mb-0">@<?= htmlspecialchars($student['username']) ?></p>
-        </div>
-      </div>
-
-      <div class="profile-overview-center">
-        <div class="profile-overview-actions">
-          <a href="Profile-Edit.php" class="btn btn-primary">Edit Profile</a>
-          <a href="Profile-Edit.php#ChangePassword" class="btn btn-outline-secondary">Change Password</a>
+          <p class="student-hero-meta">Student since <?= htmlspecialchars($student['date_of_joined']) ?></p>
         </div>
       </div>
 

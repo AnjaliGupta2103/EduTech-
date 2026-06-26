@@ -15,7 +15,7 @@ if (isset($_SESSION['username']) &&
    $topic_id = Validation::clean($_POST["topic_id"]);
    $data = "";
    if (isset($_POST["text"])) {
-       $data = Validation::clean($_POST["text"]);
+       $data = $_POST["text"];
    }
    $topic_id = Validation::clean($_POST["topic_id"]);
 

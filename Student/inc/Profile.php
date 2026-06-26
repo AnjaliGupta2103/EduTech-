@@ -1,8 +1,8 @@
 <?php
 $currentPage = basename($_SERVER['PHP_SELF']);
 ?>
-<div class="profile-page d-flex gap-4 flex-wrap align-items-start">
-  <div class="profile-sidebar-modern shadow-sm">
+<div class="profile-page student-profile-page d-flex gap-4 flex-wrap align-items-start">
+  <div class="profile-sidebar-modern student-sidebar-modern shadow-sm">
     <div class="profile-sidebar-top">
       <div class="profile-avatar-wrap">
         <img src="../Upload/profile/<?= htmlspecialchars($student['profile_img']) ?>" class="profile-avatar" alt="Profile image">
@@ -31,4 +31,4 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     </form>
   </div>
 
-  <div class="profile-content-panel">
+  <div class="profile-content-panel student-profile-content-panel">

@@ -10,7 +10,7 @@ if (isset($_SESSION['username']) &&
 
 
    if ($_SERVER['REQUEST_METHOD'] == "POST") {
-   $course_id = Validation::clean($_POST["chapter_id"]);
+   $course_id = Validation::clean($_POST["course_id"]);
    $chapter_id = Validation::clean($_POST["chapter_id"]);
    $topic_id = Validation::clean($_POST["topic_id"]);
 

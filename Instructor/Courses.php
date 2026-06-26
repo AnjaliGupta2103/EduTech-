@@ -48,7 +48,7 @@ if (isset($_SESSION['username']) &&
           $badge_class = $status == "Public" ? "success" : "danger";
         ?>
         <div class="course-card">
-          <div class="course-card-badge <?=$badge_class?>">
+          <div class="course-card-badge status <?=$badge_class?>">
             <?=$status?>
           </div>
           <div class="course-card-body">
@@ -57,14 +57,14 @@ if (isset($_SESSION['username']) &&
             </div>
             <h5><?=htmlspecialchars($course["title"])?></h5>
             <div style="height: 20px;"></div>
-            <div class="course-card-actions">
+            <div class="course-card-actions action_btn">
               <a href="Courses-View.php?course_id=<?=$course_id?>" class="btn btn-sm btn-outline-primary">
                 <i class="fa fa-eye"></i> View
               </a>
               <a href="Courses-content-add.php?course_id=<?=$course_id?>" class="btn btn-sm btn-outline-secondary">
                 <i class="fa fa-plus"></i> Add Content
               </a>
-              <a href="javascript:void()" onclick="ChangeStatus(this, <?=$course_id?>)" class="btn btn-sm btn-warning">
+              <a href="javascript:void(0)" onclick="ChangeStatus(this, <?=$course_id?>)" class="btn btn-sm btn-warning">
                 <i class="fa fa-toggle-off"></i> <?=$text_temp?>
               </a>
             </div>
@@ -146,7 +146,8 @@ if (isset($_SESSION['username']) &&
   var valu= "";
   var btext= "";
   function ChangeStatus(current, cou_id){
-    var cStatus = $(current).parent().parent().children(".status").text().toString();
+    var $card = $(current).closest('.course-card');
+    var cStatus = $card.find('.status').text().trim();
    
     if (cStatus == "Private") {
       valu = "Public";
@@ -164,9 +165,8 @@ if (isset($_SESSION['username']) &&
     },
     function(data, status){
       if (status == "success") {
-        $(current).parent().parent().children(".status").text(valu);
-        $(current).parent().parent().children(".action_btn").children("a").text(btext);
-       
+        $card.find('.status').text(valu);
+        $card.find('.action_btn a:last').text(btext);
       }
 
     });

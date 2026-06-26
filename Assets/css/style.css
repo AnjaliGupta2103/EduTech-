@@ -380,6 +380,26 @@ body {
   padding: 10px 12px;
 }
 
+.course-content-body .btn,
+.richText-editor .btn {
+  display: inline-block;
+  margin: 0.5rem 0.5rem 0.5rem 0;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  background: #2563eb;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.course-content-body .btn:hover,
+.richText-editor .btn:hover {
+  color: #ffffff;
+  text-decoration: none;
+  opacity: 0.95;
+}
+
 .course-content-footer {
   display: flex;
   align-items: center;
@@ -756,6 +776,193 @@ body {
   min-height: calc(100vh - 240px);
 }
 
+.instructor-profile-page {
+  gap: 24px;
+}
+
+.instructor-profile-page .profile-sidebar-modern {
+  background: linear-gradient(135deg, #111827 0%, #1f2937 45%, #f59e0b 100%);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 20px 45px rgba(17, 24, 39, 0.2);
+}
+
+.instructor-profile-page .profile-sidebar-modern .profile-avatar-wrap {
+  background: linear-gradient(180deg, #fff7ed 0%, #fde68a 100%);
+}
+
+.instructor-profile-page .profile-sidebar-links a {
+  color: #fef3c7;
+}
+
+.instructor-profile-page .profile-sidebar-links a:hover,
+.instructor-profile-page .profile-sidebar-links a.active {
+  background: rgba(245, 158, 11, 0.18);
+  color: #fff7ed;
+}
+
+.instructor-profile-page .profile-content-panel {
+  background: linear-gradient(180deg, #fffcf5 0%, #fef3c7 100%);
+  border: 1px solid #fde68a;
+  box-shadow: 0 16px 40px rgba(245, 158, 11, 0.12);
+}
+
+.instructor-profile-page .profile-overview-card {
+  background: linear-gradient(135deg, #fff8e1 0%, #fffdf7 100%);
+  border-color: #fde68a;
+  box-shadow: 0 12px 30px rgba(245, 158, 11, 0.08);
+}
+
+.instructor-profile-page .info-card {
+  background: #fffdf7;
+  border-color: #fde68a;
+}
+
+.instructor-profile-page .profile-stat-card.primary {
+  background: linear-gradient(180deg, #fef3c7 0%, #fff7ed 100%);
+}
+
+.instructor-profile-page .profile-stat-card.success {
+  background: linear-gradient(180deg, #fefce8 0%, #fef3c7 100%);
+}
+
+.instructor-profile-page .profile-stat-card.warning {
+  background: linear-gradient(180deg, #fffbeb 0%, #fef3c7 100%);
+}
+
+.student-profile-page {
+  gap: 24px;
+}
+
+.student-profile-page .profile-sidebar-modern {
+  background: linear-gradient(135deg, #0f766e 0%, #2563eb 40%, #7c3aed 100%);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.16);
+  box-shadow: 0 20px 45px rgba(15, 118, 110, 0.2);
+}
+
+.student-profile-page .profile-sidebar-modern .profile-avatar-wrap {
+  background: linear-gradient(180deg, #ecfeff 0%, #dbeafe 100%);
+}
+
+.student-profile-page .profile-sidebar-links a {
+  color: #ecfeff;
+}
+
+.student-profile-page .profile-sidebar-links a:hover,
+.student-profile-page .profile-sidebar-links a.active {
+  background: rgba(255,255,255,0.16);
+  color: #ffffff;
+}
+
+.student-profile-page .profile-content-panel {
+  background: linear-gradient(180deg, #f9fffe 0%, #eef2ff 100%);
+  border: 1px solid #bfdbfe;
+  box-shadow: 0 16px 40px rgba(37, 99, 235, 0.12);
+}
+
+.student-profile-page .profile-overview-card {
+  background: linear-gradient(135deg, #ecfeff 0%, #eef2ff 100%);
+  border-color: #bae6fd;
+  box-shadow: 0 12px 30px rgba(14, 165, 233, 0.08);
+}
+
+.student-profile-page .student-hero-card {
+  padding: 22px 24px;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  gap: 18px;
+}
+
+.student-profile-page .student-hero-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(37, 99, 235, 0.06), transparent 55%);
+  pointer-events: none;
+}
+
+.student-profile-page .student-avatar-shell {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  padding: 3px;
+  background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.14);
+}
+
+.student-profile-page .student-avatar-shell .overview-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
+
+.student-profile-page .student-hero-meta {
+  margin-top: 6px;
+  color: #475569;
+  font-size: 0.9rem;
+}
+
+.student-profile-page .profile-overview-summary {
+  gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+}
+
+.student-profile-page .profile-summary-item {
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 74px;
+  border-radius: 14px;
+}
+
+.student-profile-page .profile-completion {
+  margin-top: 10px;
+  padding: 12px 0 0;
+  border-top: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.student-profile-page .info-card {
+  background: #fcfeff;
+  border-color: #dbeafe;
+  border-radius: 16px;
+}
+
+.student-profile-page .section-heading-row {
+  margin-bottom: 12px;
+}
+
+.student-profile-page .certificate-panel {
+  padding: 18px;
+}
+
+.student-profile-page .certificate-list li {
+  padding: 10px 0;
+  gap: 10px;
+}
+
+.student-profile-page .empty-state {
+  min-height: 140px;
+  padding: 16px;
+}
+
+.student-profile-page .profile-stat-card.primary {
+  background: linear-gradient(180deg, #ecfeff 0%, #f8fdff 100%);
+}
+
+.student-profile-page .profile-stat-card.success {
+  background: linear-gradient(180deg, #ecfdf5 0%, #f7fff9 100%);
+}
+
+.student-profile-page .profile-stat-card.warning {
+  background: linear-gradient(180deg, #f5f3ff 0%, #faf7ff 100%);
+}
+
 .profile-page .profile-sidebar-modern {
   background: linear-gradient(180deg, #0f172a 0%, #1d4ed8 100%);
   color: #fff;
@@ -871,6 +1078,18 @@ body {
   font-weight: 700;
 }
 
+.profile-page .profile-subtitle {
+  margin: 4px 0 0;
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+.profile-page .profile-header-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 .profile-page .eyebrow {
   text-transform: uppercase;
   letter-spacing: 1.2px;
@@ -884,40 +1103,47 @@ body {
   background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
   border: 1px solid #e2e8f0;
   border-radius: 18px;
-  padding: 22px;
 }
 
 .profile-page .profile-overview-card {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 18px !important;
+  margin-bottom: 20px !important;
+  min-height: 240px !important;
+  padding: 24px !important;
+  background: linear-gradient(90deg, #eff6ff 0%, #f8fafc 55%, #f5f3ff 100%) !important;
+  border: 1px solid #dbeafe !important;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04) !important;
+}
+
+.profile-page .profile-overview-top {
   display: flex;
-  align-items: stretch;
   justify-content: space-between;
+  align-items: center;
+  gap: 18px;
   flex-wrap: wrap;
-  gap: 22px;
-  margin-bottom: 18px;
-  min-height: 230px;
-  background: linear-gradient(90deg, #eff6ff 0%, #f8fafc 55%, #f5f3ff 100%);
-  border: 1px solid #dbeafe;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.22);
 }
 
 .profile-page .profile-overview-left {
   display: flex;
   align-items: center;
   gap: 14px;
-  flex: 1 1 420px;
+  flex: 1 1 320px;
   min-width: 0;
 }
 
 .profile-page .profile-overview-center {
   display: flex;
   align-items: center;
-  justify-content: center;
-  flex: 0 0 240px;
-  min-width: 150px;
-  max-width: 280px;
+  justify-content: flex-end;
+  flex: 0 0 auto;
 }
 
 .profile-page .profile-overview-center .profile-overview-actions {
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 .profile-page .profile-identity-details {
@@ -925,19 +1151,7 @@ body {
 }
 
 .profile-page .profile-overview-right {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 16px;
-  flex: 0 0 340px;
-  min-width: 300px;
-  max-width: 360px;
-}
-
-/* ensure right panel stays at top-right of the card */
-.profile-page .profile-overview-right {
-  align-self: flex-start;
-  text-align: right;
+  width: 100%;
 }
 
 .profile-page .profile-overview-actions {
@@ -960,8 +1174,8 @@ body {
 
 .profile-page .profile-overview-summary {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
   width: 100%;
 }
 
@@ -970,7 +1184,7 @@ body {
   border: 1px solid #e2e8f0;
   border-radius: 14px;
   padding: 12px 14px;
-  text-align: right;
+  text-align: left;
 }
 
 .profile-page .profile-summary-item small {
@@ -1204,14 +1418,22 @@ body {
 
   .profile-page .profile-overview-card {
     flex-direction: column;
-    text-align: center;
+    text-align: left;
+    align-items: stretch;
+  }
+
+  .profile-page .profile-overview-top {
+    flex-direction: column;
     align-items: flex-start;
   }
 
-  .profile-page .profile-identity-block {
-    flex-direction: column;
-    align-items: flex-start;
+  .profile-page .profile-overview-center {
     width: 100%;
+    justify-content: flex-start;
+  }
+
+  .profile-page .profile-overview-summary {
+    grid-template-columns: 1fr;
   }
 
   .profile-page .profile-overview-actions {
@@ -1612,6 +1834,23 @@ body {
   background-color: #fff;
 }
 
+.form-select-compact.is-disabled-select,
+.form-select-compact.is-disabled-select:disabled,
+.selection-select.is-disabled-select,
+.selection-select.is-disabled-select:disabled {
+  background-color: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  color: #64748b !important;
+  cursor: not-allowed;
+  opacity: 1;
+  box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.25);
+}
+
+.form-select-compact.is-disabled-select option,
+.selection-select.is-disabled-select option {
+  color: #0f172a;
+}
+
 /* Content Update Card */
 .content-update-card {
   background: linear-gradient(180deg, #ffffff 0%, #fcfdff 100%);
@@ -1724,6 +1963,47 @@ body {
   border-color: #2563eb;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
   outline: none;
+}
+
+.content-update-card .richText {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.content-update-card .richText-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 10px 12px;
+  border-bottom: 1px solid #e2e8f0;
+  background: #f8fbff;
+}
+
+.content-update-card .richText-editor {
+  min-height: 320px;
+  padding: 14px 16px;
+  background: #fff;
+  color: #0f172a;
+}
+
+.content-update-card .richText-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid #dbeafe;
+  background: #fff;
+  color: #2563eb;
+  transition: all 0.2s ease;
+}
+
+.content-update-card .richText-btn:hover {
+  background: #eff6ff;
+  border-color: #2563eb;
 }
 
 /* Editor Actions */

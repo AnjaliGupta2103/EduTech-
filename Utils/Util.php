@@ -2,7 +2,12 @@
 
 class Util{
 	static function redirect($location, $type, $em, $data=""){
-	    header("Location: $location?$type=$em&$data");
+	    $query = rawurlencode($type) . '=' . rawurlencode($em);
+	    if (!empty($data)) {
+	        $query .= '&' . $data;
+	    }
+	    $separator = strpos($location, '?') === false ? '?' : '&';
+	    header("Location: $location$separator$query");
 	    exit;
 	}
 

@@ -70,3 +70,11 @@ function getCourseById($instructor_id){
 	return $courses;
 }
 
+function getCourseDetailById($course_id){
+	$db = new Database();
+    $db_conn = $db->connect();
+    $course_model = new Course($db_conn);
+	$course = $course_model->getById($course_id);
+	return $course;
+}
+

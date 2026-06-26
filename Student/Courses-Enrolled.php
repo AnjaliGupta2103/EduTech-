@@ -48,27 +48,30 @@ if (isset($_SESSION['username']) &&
       Util::redirect("Courses.php", "course_id", $course_id);
     }
     
-    $all_chapters = count($course['chapters']);
-    $chapter_val = (1 / $all_chapters) * 100;
-    
-    // Update progress based on current chapter view
+    $all_topics = is_array($course['topics'] ?? null) ? count($course['topics']) : 0;
+    $topic_val = $all_topics > 0 ? (100 / $all_topics) : 100;
+
     $progress = getStudentProgress($course_id, $student_id);
-    
-    $i = 0;
-    foreach($course['chapters'] as $chapter) {
-        $i++;
-        if ($chapter['chapter_id'] == $_chapter_id) {
-            $progress_plus = ($chapter_val * $i);
-            if ($progress_plus >= $progress) {
+
+    if ($progress === 0 || $progress === false || $progress === null) {
+        $progress = 0;
+    }
+
+    $current_topic_index = 0;
+    foreach ($course['topics'] as $topic) {
+        $current_topic_index++;
+        if ((int)$topic['topic_id'] === (int)$_topic_id) {
+            $progress_plus = $topic_val * $current_topic_index;
+            if ($progress_plus != $progress && ($progress_plus > $progress || $progress >= 100)) {
                 updateStudentProgress($course_id, $student_id, $progress_plus);
-                $progress = $progress_plus;  // Update display value immediately
+                $progress = $progress_plus;
             }
-            break;  // Exit loop once we find the current chapter
+            break;
         }
     }
-    
-    if ($progress >= 100) {
-      $progress = 100;
+
+    if ($progress > 100) {
+        $progress = 100;
     }
 
 
