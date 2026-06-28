@@ -9,24 +9,32 @@ if (isset($_SESSION['username']) &&
         $current_status = normalizeInstructorStatus($_GET['status']);
     }
 
+    $allowed_rows = [5, 10, 20, 50];
+    $row_num = 5;
+    if (isset($_GET['rows_per_page']) && in_array((int) $_GET['rows_per_page'], $allowed_rows, true)) {
+        $row_num = (int) $_GET['rows_per_page'];
+    }
+
     $all_count = getCount('all');
     $active_count = getCount('active');
     $inactive_count = getCount('inactive');
     $row_count = getCount($current_status);
 
     $page = 1;
-    $row_num = 5;
     $offset = 0;
-    $last_page = ceil($row_count / $row_num);
+    $last_page = max(1, ceil($row_count / $row_num));
     if(isset($_GET['page'])){
-    if($_GET['page'] > $last_page){
-        $page = $last_page;
-    }else if($_GET['page'] <= 0){
-        $page = 1; 
-    }else $page = $_GET['page'];
+        $page = (int) $_GET['page'];
+        if($_GET['page'] > $last_page){
+            $page = $last_page;
+        }else if($_GET['page'] <= 0){
+            $page = 1; 
+        }
     }
     if($page != 1) $offset = ($page-1) * $row_num;
     $serial_start = $offset + 1;
+    $start_record = $row_count > 0 ? $offset + 1 : 0;
+    $end_record = min($offset + $row_num, $row_count);
     $instructors = getSomeInstructors($offset, $row_num, $current_status);
     # Header
     $title = "EduPulse - Instructors";
@@ -39,112 +47,120 @@ if (isset($_SESSION['username']) &&
   <?php include "inc/NavBar.php"; ?>
   
   <div class="list-table pt-5">
-  <ul class="nav nav-tabs mb-4">
-    <li class="nav-item">
-      <a class="nav-link <?= $current_status == 'all' ? 'active' : '' ?>" href="Instructors.php?status=all">All (<?=$all_count?>)</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link <?= $current_status == 'active' ? 'active' : '' ?>" href="Instructors.php?status=active">Active (<?=$active_count?>)</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link <?= $current_status == 'inactive' ? 'active' : '' ?>" href="Instructors.php?status=inactive">Inactive (<?=$inactive_count?>)</a>
-    </li>
-  </ul>
-  <?php if ($instructors) { ?>
-  <h4>
-    <span id="instructor-list-title"><?= $current_status == 'all' ? 'All Instructors' : ($current_status == 'active' ? 'Active Instructors' : 'Inactive Instructors') ?> (<?=$row_count?>)</span>
-    <?php if ($current_status == 'all') { ?>
-      <a class="btn btn-success md-btn" href="Instructor-add.php">Add Instructor</a>
+    <?php if (!empty($instructors)) { ?>
+    <div class="card shadow-sm border-0 admin-list-card mb-4">
+      <div class="card-body">
+        <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between mb-4 gap-3">
+          <div>
+            <h4 class="mb-1" id="instructor-list-title"><?= $current_status === 'all' ? 'All Instructors' : ($current_status === 'active' ? 'Active Instructors' : 'Inactive Instructors') ?> (<?=$row_count?>)</h4>
+            <div class="text-muted small">Showing <?=$start_record?> to <?=$end_record?> of <?=$row_count?> instructors</div>
+          </div>
+          <form method="get" class="d-flex align-items-center gap-2 mb-0">
+            <input type="hidden" name="status" value="<?=$current_status?>">
+            <label class="mb-0 small text-muted">Records per page</label>
+            <select name="rows_per_page" class="form-select form-select-sm" onchange="this.form.submit()">
+              <?php foreach ($allowed_rows as $num) { ?>
+                <option value="<?=$num?>" <?= $row_num === $num ? 'selected' : '' ?>><?=$num?></option>
+              <?php } ?>
+            </select>
+            <noscript><button type="submit" class="btn btn-primary btn-sm">Apply</button></noscript>
+          </form>
+        </div>
+        <div class="mb-3">
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link <?= $current_status == 'all' ? 'active' : '' ?>" href="Instructors.php?status=all&rows_per_page=<?=$row_num?>">All (<?=$all_count?>)</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link <?= $current_status == 'active' ? 'active' : '' ?>" href="Instructors.php?status=active&rows_per_page=<?=$row_num?>">Active (<?=$active_count?>)</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link <?= $current_status == 'inactive' ? 'active' : '' ?>" href="Instructors.php?status=inactive&rows_per_page=<?=$row_num?>">Inactive (<?=$inactive_count?>)</a>
+            </li>
+          </ul>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover table-bordered align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Id</th>
+                <th>Full name</th>
+                <th>Status</th>
+                <th>Block / Unblock</th>
+                <?php if ($current_status === 'inactive') { ?>
+                  <th>Delete</th>
+                <?php } ?>
+              </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($instructors as $instructor) {
+                  $serial = $serial_start++;
+                  $instructor_id = $instructor["instructor_id"];
+                  $text_temp = $instructor["status"] == "Active" ? "Block": "Unblock";
+            ?>
+              <tr>
+                <td><?=$serial?></td>
+                <td><a class="text-decoration-none" href="instructor.php?instructor_id=<?=$instructor_id?>"><?=$instructor["first_name"]?> <?=$instructor["last_name"]?></a></td>
+                <td class="status"><span class="badge bg-<?= $instructor["status"] == "Active" ? 'success' : 'secondary' ?>"><?=$instructor["status"]?></span></td>
+                <td class="action_btn">
+                  <a href="javascript:void(0)" onclick="ChangeStatus(this, <?=$instructor_id?>)" class="btn btn-sm btn-outline-danger"><?=$text_temp?></a>
+                </td>
+                <?php if ($current_status === 'inactive') { ?>
+                <td class="delete_btn">
+                  <a href="javascript:void(0)" onclick="deleteInstructor(this, <?=$instructor_id?>)" class="btn btn-sm btn-outline-danger">Delete</a>
+                </td>
+                <?php } ?>
+              </tr>
+            <?php } ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <?php if ($last_page >= 1 ) { ?>
+    <div class="d-flex justify-content-center mt-3 border rounded p-2 bg-white shadow-sm">
+        <?php
+              $prev = 1;
+              $next = 1;
+              $next_btn = true;
+              $prev_btn = true;
+              if($page <= 1) $prev_btn = false; 
+              if($last_page ==  $page) $next_btn = false; 
+              if($page > 1) $prev = $page - 1;
+              if($page < $last_page) $next = $page + 1;
+              
+              if ($prev_btn){
+              ?>
+              <a href="Instructors.php?status=<?=$current_status?>&page=<?=$prev?>&rows_per_page=<?=$row_num?>" class="btn btn-secondary m-2">Prev</a>
+             <?php }else { ?>
+              <a href="#" class="btn btn-secondary m-2 disabled">Prev</a>
+             <?php 
+             }
+             $push_mid = $page;
+             if ($page >= 2)  $push_mid = $page - 1;
+             if ($page > 3)  $push_mid = $page - 3;
+            
+             for($i = $push_mid; $i < 5 + $page; $i++){
+              if($i == $page){ ?>
+               <a href="Instructors.php?status=<?=$current_status?>&page=<?=$i?>&rows_per_page=<?=$row_num?>" class="btn btn-success m-2"><?=$i?></a>
+             <?php }else{ ?>
+               <a href="Instructors.php?status=<?=$current_status?>&page=<?=$i?>&rows_per_page=<?=$row_num?>" class="btn btn-secondary m-2"><?=$i?></a>
+             <?php } 
+             if($last_page <= $i)break;
+              } 
+              if($next_btn){
+              ?>
+              <a href="Instructors.php?status=<?=$current_status?>&page=<?=$next?>&rows_per_page=<?=$row_num?>" class="btn btn-secondary m-2">Next</a>
+          <?php }else { ?>
+             <a href="#" class="btn btn-secondary m-2 disabled">Next</a>
+          <?php } ?>
+    </div>
     <?php } ?>
-  </h4>
-
-  <table class="table table-bordered">
-      <thead>
-      <tr>
-        <th>Id</th>
-        <th>Full name</th>
-        <th>Status</th>
-        <th>Block/ Unblock</th>
-        <?php if ($current_status === 'inactive') { ?>
-          <th>Delete</th>
-        <?php } ?>
-      </tr>
-      </thead>
-      <tbody>
-      <?php foreach ($instructors as $instructor) {
-            $serial = $serial_start++;
-            $instructor_id = $instructor["instructor_id"];
-            $text_temp = $instructor["status"] == "Active" ? "Block": "Unblock";
-      ?>
-      <tr>
-      <td><?=$serial?></td>
-       <td><a href="instructor.php?instructor_id=<?=$instructor_id?>"><?=$instructor["first_name"]?> <?=$instructor["last_name"]?></a></td>
-       <td class="status"><?=$instructor["status"]?></td>
-       <td class="action_btn">
-        <a href="javascript:void(0)" 
-           onclick="ChangeStatus(this, <?=$instructor_id?>)" 
-           class="btn btn-danger"><?=$text_temp?></a>
-       </td>
-       <?php if ($current_status === 'inactive') { ?>
-       <td class="delete_btn">
-         <a href="javascript:void(0)" onclick="deleteInstructor(this, <?=$instructor_id?>)" class="btn btn-danger">Delete</a>
-       </td>
-       <?php } ?>
-      </tr>
-      <?php } ?>
-      </tbody>
-  </table>
-  <?php if ($last_page > 1 ) { ?>
-  <div class="d-flex justify-content-center mt-3 border">
-      <?php
-            $prev = 1;
-            $next = 1;
-            $next_btn = true;
-            $prev_btn = true;
-            if($page <= 1) $prev_btn = false; 
-            if($last_page ==  $page) $next_btn = false; 
-            if($page > 1) $prev = $page - 1;
-            if($page < $last_page) $next = $page + 1;
-            
-            if ($prev_btn){
-            ?>
-            <a href="Instructors.php?status=<?=$current_status?>&page=<?=$prev?>" class="btn btn-secondary m-2">Prev</a>
-           <?php }else { ?>
-            <a href="#" class="btn btn-secondary m-2 disabled">Prev</a>
-            
-           <?php 
-           }
-           $push_mid = $page;
-           if ($page >= 2)  $push_mid = $page - 1;
-           if ($page > 3)  $push_mid = $page - 3;
-          
-           for($i = $push_mid; $i < 5 + $page; $i++){
-            if($i == $page){ ?>
-             <a href="Instructors.php?status=<?=$current_status?>&page=<?=$i?>" class="btn btn-success m-2"><?=$i?></a>
-           <?php }else{ ?>
-             <a href="Instructors.php?status=<?=$current_status?>&page=<?=$i?>" class="btn btn-secondary m-2"><?=$i?></a>
-
-           <?php } 
-           if($last_page <= $i)break;
-
-            } 
-            if($next_btn){
-            ?>
-            <a href="Instructors.php?status=<?=$current_status?>&page=<?=$next?>" class="btn btn-secondary m-2">Next</a>
-        <?php }else { ?>
-           <a href="#" class="btn btn-secondary m-2 disabled" des>Next</a>
-        <?php } ?>
-  </div>
-
-  <?php }}else { ?>
-    <div class="alert alert-info" role="alert">
-      0 instructors record found in the database
-</div>
-
-  <?php } ?>
-  </div>
-
-
+    <?php } else { ?>
+      <div class="alert alert-info" role="alert">
+        0 instructors record found in the database
+      </div>
+    <?php } ?>
 
 </div>
  <!-- Footer -->
@@ -240,7 +256,8 @@ if (isset($_SESSION['username']) &&
       if (status == "success") {
         var oldStatus = cStatus;
         var newStatus = valu;
-        row.find(".status").text(newStatus);
+        var badgeClass = newStatus === 'Active' ? 'success' : 'secondary';
+        row.find('.status').html('<span class="badge bg-' + badgeClass + '">' + newStatus + '</span>');
         $(current).text(btext);
         updateTabCounts(oldStatus, newStatus);
 

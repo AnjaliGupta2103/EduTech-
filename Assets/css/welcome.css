@@ -173,7 +173,7 @@ nav a:hover {
 }
 
 .container404 .rotate {
-    animation: rotate 2s infinite linear;
+    animation: rotate 1s infinite linear;
 }
 
 @keyframes rotate {

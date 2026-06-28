@@ -29,35 +29,44 @@ if (isset($_SESSION['username']) &&
   <!-- NavBar -->
   <?php include "inc/NavBar.php"; ?>
   
-  <div class="list-table pt-5">
+  <div class="list-table pt-5 course-admin-page">
   <?php if ($courses) { ?>
-  <h4>All Courses (<?=$row_count?>)</h4>
+  <div class="course-page-header">
+    <div>
+      <h4>All Courses</h4>
+      <p class="text-muted">Showing <?=$row_count?> courses for the admin dashboard.</p>
+    </div>
+    <div class="d-flex gap-2 align-items-center">
+      <span class="badge bg-primary py-2 px-3">Total <?=$row_count?></span>
+    </div>
+  </div>
 
-  <table class="table table-bordered">
-      <tr>
-        <th>Id</th>
-        <th>Full name</th>
-        <th>Status</th>
-        <th>Action</th>
-      </tr>
-      <?php foreach ($courses as $course) {?>
-      <tr>
-      <td><?=$course["course_id"]?></td>
-       <td><a href="Course.php?course_id=<?=$course["course_id"]?>"><?=$course["title"]?></a></td>
-       <td class="status"> <?=$course["status"]?></td>
-       <td class="action_btn">
-        <?php  
-        $status = $course["status"];
-        $course_id = $course["course_id"];
-        $text_temp = $course["status"] == "Public" ? "Private": "Public";
-        ?> 
-        <a href="javascript:void()" onclick="ChangeStatus(this, <?=$course_id?>)" class="btn btn-warning"><?=$text_temp?></a>
-       </td>
-      </tr>
-      <?php } ?>
-  </table>
+  <div class="course-list admin-course-list">
+    <?php foreach ($courses as $course) {
+      $status = $course["status"];
+      $course_id = $course["course_id"];
+      $text_temp = $status == "Public" ? "Private": "Public";
+      $description = !empty($course["description"]) ? $course["description"] : "View course content and chapters.";
+    ?>
+      <div class="course-card">
+        <div class="course-card-body">
+          <div class="course-card-meta">
+            <span class="course-card-badge <?= $status === 'Public' ? 'success' : '' ?>"><?= htmlspecialchars($status) ?></span>
+            <span class="text-muted">ID #<?= htmlspecialchars($course_id) ?></span>
+          </div>
+          <h5><a href="Course.php?course_id=<?= htmlspecialchars($course_id) ?>" class="text-decoration-none text-dark"><?= htmlspecialchars($course["title"]) ?></a></h5>
+          <p><?= htmlspecialchars(strlen($description) > 110 ? substr($description, 0, 110) . '...' : $description) ?></p>
+          <div class="course-card-actions">
+            <a href="Course.php?course_id=<?= htmlspecialchars($course_id) ?>" class="btn btn-sm btn-primary">View Content</a>
+            <button type="button" onclick="ChangeStatus(this, <?= htmlspecialchars($course_id) ?>)" class="btn btn-sm btn-outline-warning"><?= htmlspecialchars($text_temp) ?></button>
+          </div>
+        </div>
+      </div>
+    <?php } ?>
+  </div>
+
   <?php if ($last_page > 1 ) { ?>
-  <div class="d-flex justify-content-center mt-3 border">
+  <div class="d-flex justify-content-center flex-wrap gap-2 mt-4 pagination-wrapper">
       <?php
             $prev = 1;
             $next = 1;
@@ -70,10 +79,9 @@ if (isset($_SESSION['username']) &&
             
             if ($prev_btn){
             ?>
-            <a href="Courses.php?page=<?=$prev?>" class="btn btn-secondary m-2">Prev</a>
+            <a href="Courses.php?page=<?=$prev?>" class="btn btn-secondary">Prev</a>
            <?php }else { ?>
-            <a href="#" class="btn btn-secondary m-2 disabled">Prev</a>
-            
+            <a href="#" class="btn btn-secondary disabled">Prev</a>
            <?php 
            }
            $push_mid = $page;
@@ -82,9 +90,9 @@ if (isset($_SESSION['username']) &&
           
            for($i = $push_mid; $i < 5 + $page; $i++){
             if($i == $page){ ?>
-             <a href="Courses.php?page=<?=$i?>" class="btn btn-success m-2"><?=$i?></a>
+             <a href="Courses.php?page=<?=$i?>" class="btn btn-success"><?=$i?></a>
            <?php }else{ ?>
-             <a href="Courses.php?page=<?=$i?>" class="btn btn-secondary m-2"><?=$i?></a>
+             <a href="Courses.php?page=<?=$i?>" class="btn btn-secondary"><?=$i?></a>
 
            <?php } 
            if($last_page <= $i)break;
@@ -92,17 +100,17 @@ if (isset($_SESSION['username']) &&
             } 
             if($next_btn){
             ?>
-            <a href="Courses.php?page=<?=$next?>" class="btn btn-secondary m-2">Next</a>
+            <a href="Courses.php?page=<?=$next?>" class="btn btn-secondary">Next</a>
         <?php }else { ?>
-           <a href="#" class="btn btn-secondary m-2 disabled" des>Next</a>
+           <a href="#" class="btn btn-secondary disabled">Next</a>
         <?php } ?>
   </div>
 
-  <?php }}else { ?>
+  <?php } ?>
+  <?php } else { ?>
     <div class="alert alert-info" role="alert">
-      0 students record found in the database
-</div>
-
+      No course records found in the database.
+    </div>
   <?php } ?>
   </div>
 
