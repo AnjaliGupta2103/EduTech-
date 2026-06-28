@@ -21,7 +21,7 @@ class Instructor{
    
    function insert($data){
        try {
-          $sql = 'INSERT INTO '. $this->table_name.'(username, first_name, last_name, email, date_of_birth, password) VALUES(?,?,?,?,?,?)';
+          $sql = 'INSERT INTO '. $this->table_name.'(username, first_name, last_name, email, date_of_birth, date_of_joined, password) VALUES(?,?,?,?,?,CURDATE(),?)';
           $stmt = $this->conn->prepare($sql);
           $res = $stmt->execute($data);
           Util::log("DB INSERT executed for username={$data[0]}, result=" . ($res ? 'success' : 'failure'), 'instructor-add');

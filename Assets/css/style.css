@@ -160,6 +160,21 @@ body > .container {
   background: rgba(22, 163, 74, 0.9);
 }
 
+.course-admin-page .course-card {
+  position: relative;
+}
+
+.course-admin-page .course-card-badge {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.course-admin-page .course-card:hover .course-card-badge {
+  opacity: 1;
+}
+
 .course-card-body {
   padding: 18px;
 }

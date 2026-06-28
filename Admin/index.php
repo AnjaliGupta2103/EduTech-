@@ -47,13 +47,15 @@ if (isset($_SESSION['username']) &&
             <div class="text-muted small">Showing <?=$start_record?> to <?=$end_record?> of <?=$row_count?> students</div>
           </div>
           <form method="get" class="d-flex align-items-center gap-2 mb-0">
-            <label class="mb-0 small text-muted">Records per page</label>
-            <select name="rows_per_page" class="form-select form-select-sm" onchange="this.form.submit()">
-              <?php foreach ($allowed_rows as $num) { ?>
-                <option value="<?=$num?>" <?= $row_num === $num ? 'selected' : '' ?>><?=$num?></option>
-              <?php } ?>
-            </select>
-            <noscript><button type="submit" class="btn btn-primary btn-sm">Apply</button></noscript>
+            <div class="input-group input-group-sm">
+              <label class="input-group-text bg-white" for="rows_per_page">Records</label>
+              <select id="rows_per_page" name="rows_per_page" class="form-select" onchange="this.form.submit()">
+                <?php foreach ($allowed_rows as $num) { ?>
+                  <option value="<?=$num?>" <?= $row_num === $num ? 'selected' : '' ?>><?=$num?></option>
+                <?php } ?>
+              </select>
+            </div>
+            <noscript><button type="submit" class="btn btn-secondary btn-sm">Apply</button></noscript>
           </form>
         </div>
         <div class="table-responsive">

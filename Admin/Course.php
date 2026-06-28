@@ -7,9 +7,9 @@ if (isset($_SESSION['username']) &&
     
   if (isset($_GET['course_id'])) {
      include "../Controller/Admin/Course.php";
-     $_id = Validation::clean($_GET['course_id']);
-     $_chapter_id = isset($_GET['chapter']) ? Validation::clean($_GET['chapter']) : 1;
-     $_topic_id = isset($_GET['topic']) ? Validation::clean($_GET['topic']) : 1;
+     $_id = (int) Validation::clean($_GET['course_id']);
+     $_chapter_id = isset($_GET['chapter']) ? (int) Validation::clean($_GET['chapter']) : 1;
+     $_topic_id = isset($_GET['topic']) ? (int) Validation::clean($_GET['topic']) : 1;
 
      $course = getById($_id, $_chapter_id, $_topic_id);
 
@@ -20,7 +20,7 @@ if (isset($_SESSION['username']) &&
 
      $chapterIds = [];
      if (!empty($course['chapters']) && is_array($course['chapters'])) {
-         $chapterIds = array_column($course['chapters'], 'chapter_id');
+         $chapterIds = array_map('intval', array_column($course['chapters'], 'chapter_id'));
      }
 
      if (!in_array($_chapter_id, $chapterIds, true)) {
@@ -30,7 +30,7 @@ if (isset($_SESSION['username']) &&
      $chapterTopics = [];
      if (!empty($course['topics']) && is_array($course['topics'])) {
          foreach ($course['topics'] as $topic) {
-             if ($topic['chapter_id'] == $_chapter_id) {
+             if ((int)$topic['chapter_id'] === $_chapter_id) {
                  $chapterTopics[] = $topic;
              }
          }
@@ -41,16 +41,16 @@ if (isset($_SESSION['username']) &&
      }
 
      if (!empty($chapterTopics)) {
-         $validTopicIds = array_column($chapterTopics, 'topic_id');
+         $validTopicIds = array_map('intval', array_column($chapterTopics, 'topic_id'));
          if (!in_array($_topic_id, $validTopicIds, true)) {
-             $_topic_id = $chapterTopics[0]['topic_id'];
+             $_topic_id = (int) $chapterTopics[0]['topic_id'];
          }
      } else {
          $_topic_id = 0;
      }
 
      $course = getById($_id, $_chapter_id, $_topic_id);
-      $num_topic = 0;
+     $num_topic = 0;
 
     # Header
     $title = "EduPulse - ". $course['course']["title"];

@@ -8,3 +8,8 @@
 [2026-06-17 21:47:05] DB SELECT username unique check for aryan37g: unique
 [2026-06-17 21:47:06] DB INSERT executed for username=aryan37g, result=success
 [2026-06-17 21:47:06] instructor inserted successfully: aryan37g
+[2026-06-28 21:24:57] instructor-add request received. username=instructor_anj, first_name=Anjali, last_name=Gupta, email=abc@gmail.com, dob=1996-12-28
+[2026-06-28 21:24:57] checking username uniqueness for instructor_anj
+[2026-06-28 21:24:57] DB SELECT username unique check for instructor_anj: unique
+[2026-06-28 21:24:57] DB INSERT executed for username=instructor_anj, result=success
+[2026-06-28 21:24:57] instructor inserted successfully: instructor_anj

@@ -6,10 +6,24 @@ if (isset($_SESSION['username']) &&
     isset($_SESSION['admin_id'])) {
     
     include "../Controller/Admin/System.php";  
-    // get Certificates
+    // get analytics metrics
     $student_count = getstudentsCount();
     $Instructor_count = getInstructorCount();
     $Course_count = getCourseCount();
+    $enrollment_count = getEnrollmentCount();
+    $top_courses = getTopCoursesByEnrollment(3);
+    $weekly_student_registrations = getWeeklyStudentRegistrations(7);
+    $weekly_course_creations = getWeeklyCourseCreations(7);
+    $recent_activity = getRecentActivityCounts(7);
+
+    $registrationLabels = json_encode(array_keys($weekly_student_registrations));
+    $registrationCounts = json_encode(array_values($weekly_student_registrations));
+    $courseCreationLabels = json_encode(array_keys($weekly_course_creations));
+    $courseCreationCounts = json_encode(array_values($weekly_course_creations));
+    $topCourseTitles = json_encode(array_column($top_courses, 'title'));
+    $topCourseEnrollments = json_encode(array_column($top_courses, 'enrollments'));
+    $statusLabels = json_encode(array_map(function($row){ return $row['status']; }, $course_status_counts = getCourseStatusCounts()));
+    $statusCounts = json_encode(array_map(function($row){ return (int)$row['total']; }, $course_status_counts));
     
     # Header 
     $title = "EduPulse - System Analysis ";
@@ -22,89 +36,153 @@ if (isset($_SESSION['username']) &&
   <div class="p-5 shadow">
     <h4>System Analysis</h4><hr><br>
 
-    <!-- Display Graphs/Charts for Analysis -->
-    <div class="mb-5" style="max-width: 600px">
-        <h4>Traffic Analysis</h4>
-        <!-- Bar Chart -->
-        <canvas id="visitedStudentsChart" width="400" height="200"></canvas>
+    <style>
+      .chart-container canvas { display: block; width: 100%; height: 100%; }
+    </style>
+
+    <div class="row gy-4">
+      <div class="col-12">
+        <div class="card p-4 mb-4" style="min-height: 360px;">
+          <h5 class="mb-3">Student Registrations</h5>
+          <div class="chart-container" style="position: relative; height: 340px; width: 100%;">
+            <canvas id="registrationChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="card p-4 mb-4" style="min-height: 360px;">
+          <h5 class="mb-3">Course Creations</h5>
+          <div class="chart-container" style="position: relative; height: 340px; width: 100%;">
+            <canvas id="courseCreationChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="card p-4 mb-4" style="min-height: 360px;">
+          <h5 class="mb-3">Course Visibility</h5>
+          <div class="chart-container" style="position: relative; height: 340px; width: 100%;">
+            <canvas id="courseStatusChart"></canvas>
+          </div>
+        </div>
+      </div>
     </div>
 
-    
-
-    <!-- Display Overall Statistics -->
-    <div class="mb-5 overall-statistics">
-        <h4>Overall Statistics</h4>
-        <ul class="d-flex">
-            <li><span><?=$student_count?></span>Total Students </li>
-            <li><span><?=$Instructor_count?></span>Total Instructors</li>
-            <li><span><?=$Course_count?></span>Total Courses</li>
-            <!-- Add more statistics as needed -->
-        </ul>
+    <div class="row gy-4 mt-2">
+      <div class="col-12 col-lg-6">
+        <div class="card p-4 h-100">
+          <h5 class="mb-3">Overall Statistics</h5>
+          <ul class="d-flex flex-wrap gap-3 list-unstyled mb-0">
+              <li class="border rounded p-3 text-center flex-fill" style="min-width: 170px;"><span class="d-block fs-3 fw-bold"><?=$student_count?></span>Total Students</li>
+              <li class="border rounded p-3 text-center flex-fill" style="min-width: 170px;"><span class="d-block fs-3 fw-bold"><?=$Instructor_count?></span>Total Instructors</li>
+              <li class="border rounded p-3 text-center flex-fill" style="min-width: 170px;"><span class="d-block fs-3 fw-bold"><?=$Course_count?></span>Total Courses</li>
+              <li class="border rounded p-3 text-center flex-fill" style="min-width: 170px;"><span class="d-block fs-3 fw-bold"><?=$enrollment_count?></span>Total Enrollments</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="card p-4 h-100">
+          <h5 class="mb-3">Recent Activity</h5>
+          <ul class="list-unstyled mb-0">
+              <li class="mb-2"><?= htmlspecialchars($recent_activity['new_students']) ?> new students joined in the last 7 days.</li>
+              <li class="mb-2"><?= htmlspecialchars($recent_activity['new_courses']) ?> new courses were created in the last 7 days.</li>
+              <li class="mb-2"><?= htmlspecialchars($recent_activity['new_enrollments']) ?> new enrollments happened in the last 7 days.</li>
+          </ul>
+        </div>
+      </div>
     </div>
 
-    <!-- Display Recent Activities -->
-    <div class="mb-4 system-activities">
-        <h4>Recent Activities</h4>
-        <ul>
-            <li>10 new students joined this week.</li>
-            <li>5 new courses were created.</li>
-            <li>Quiz completion rates have increased by 15%.</li>
-            <!-- Add more recent activities as needed -->
-        </ul>
+    <div class="row gy-4 mt-4">
+      <div class="col-12">
+        <div class="card p-4">
+          <h5 class="mb-3">Top Courses by Enrollment</h5>
+          <ul class="list-group">
+              <?php if (!empty($top_courses)) { ?>
+                  <?php foreach ($top_courses as $course) { ?>
+                      <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <?= htmlspecialchars($course['title']) ?>
+                        <span class="badge bg-primary rounded-pill"><?= htmlspecialchars($course['enrollments']) ?> students</span>
+                      </li>
+                  <?php } ?>
+              <?php } else { ?>
+                  <li class="list-group-item">No enrollments recorded yet.</li>
+              <?php } ?>
+          </ul>
+        </div>
+      </div>
     </div>
-
-    <!-- Display Course Enrollment Statistics -->
-    <div class="mb-5 enrollment-statistics">
-        <h4>Course Enrollment Statistics</h4>
-        <p>Top 3 Courses with Highest Enrollment</p>
-        <ul class="d-flex">
-            <li><span>150 students</span>Course A </li>
-            <li><span>100 students</span>Course B</li>
-            <li><span>120 students</span>Course C</li>
-            <!-- Add more statistics as needed -->
-        </ul>
-    </div><br>
-   <h4>Expected vs Actual Student Registration This Week</h4><br>
-    <div class="mb-5" style="max-width: 350px">
-        
-        <!-- Pie Chart -->
-        <canvas id="registrationPieChart" width="400" height="400"></canvas>
-    </div>
-    
   </div>
 
 <script>
-    // Sample data for enrollment pie chart
-    var registrationPieChart = {
-        labels: ['Actual', 'Expected'],
-        datasets: [{
-            data: [300, 500],
-            backgroundColor: ['#0D6EFD', '#eee'],
-        }]
-    };
+    var registrationLabels = <?=$registrationLabels?>;
+    var registrationCounts = <?=$registrationCounts?>;
+    var courseCreationLabels = <?=$courseCreationLabels?>;
+    var courseCreationCounts = <?=$courseCreationCounts?>;
+    var statusLabels = <?=$statusLabels?>;
+    var statusCounts = <?=$statusCounts?>;
 
-    // Create enrollment pie chart
-    var enrollmentPieChart = new Chart(document.getElementById('registrationPieChart'), {
-        type: 'pie',
-        data: registrationPieChart
+    var registrationChart = new Chart(document.getElementById('registrationChart'), {
+        type: 'line',
+        data: {
+            labels: registrationLabels,
+            datasets: [{
+                label: 'New student registrations',
+                data: registrationCounts,
+                backgroundColor: 'rgba(54, 162, 235, 0.15)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                fill: true,
+                tension: 0.3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
     });
 
-    // Sample data for visited students bar chart
-    var visitedStudentsData = {
-        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-        datasets: [{
-            label: 'Visited Students',
-            data: [20, 30, 25, 15],
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            borderColor: 'rgba(75, 192, 192, 1)',
-            borderWidth: 1
-        }]
-    };
-
-    // Create visited students bar chart
-    var visitedStudentsChart = new Chart(document.getElementById('visitedStudentsChart'), {
+    var courseCreationChart = new Chart(document.getElementById('courseCreationChart'), {
         type: 'bar',
-        data: visitedStudentsData
+        data: {
+            labels: courseCreationLabels,
+            datasets: [{
+                label: 'New courses created',
+                data: courseCreationCounts,
+                backgroundColor: 'rgba(40, 167, 69, 0.3)',
+                borderColor: 'rgba(40, 167, 69, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            devicePixelRatio: window.devicePixelRatio || 1,
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    var courseStatusChart = new Chart(document.getElementById('courseStatusChart'), {
+        type: 'doughnut',
+        data: {
+            labels: statusLabels,
+            datasets: [{
+                data: statusCounts,
+                backgroundColor: ['#0d6efd', '#6c757d', '#198754', '#ffc107'],
+                borderColor: '#fff',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            devicePixelRatio: window.devicePixelRatio || 1,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
     });
 </script>
 </div>

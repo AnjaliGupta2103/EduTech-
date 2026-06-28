@@ -49,14 +49,14 @@ if (isset($_SESSION['username']) &&
       $description = !empty($course["description"]) ? $course["description"] : "View course content and chapters.";
     ?>
       <div class="course-card">
+        <div class="course-card-badge status <?= $status === 'Public' ? 'success' : '' ?>"><?= htmlspecialchars($status) ?></div>
         <div class="course-card-body">
           <div class="course-card-meta">
-            <span class="course-card-badge <?= $status === 'Public' ? 'success' : '' ?>"><?= htmlspecialchars($status) ?></span>
             <span class="text-muted">ID #<?= htmlspecialchars($course_id) ?></span>
           </div>
           <h5><a href="Course.php?course_id=<?= htmlspecialchars($course_id) ?>" class="text-decoration-none text-dark"><?= htmlspecialchars($course["title"]) ?></a></h5>
           <p><?= htmlspecialchars(strlen($description) > 110 ? substr($description, 0, 110) . '...' : $description) ?></p>
-          <div class="course-card-actions">
+          <div class="course-card-actions action_btn">
             <a href="Course.php?course_id=<?= htmlspecialchars($course_id) ?>" class="btn btn-sm btn-primary">View Content</a>
             <button type="button" onclick="ChangeStatus(this, <?= htmlspecialchars($course_id) ?>)" class="btn btn-sm btn-outline-warning"><?= htmlspecialchars($text_temp) ?></button>
           </div>
@@ -124,7 +124,8 @@ if (isset($_SESSION['username']) &&
   var valu= "";
   var btext= "";
   function ChangeStatus(current, cou_id){
-    var cStatus = $(current).parent().parent().children(".status").text().toString();
+    var $card = $(current).closest('.course-card');
+    var cStatus = $card.find('.status').text().trim();
    
     if (cStatus == "Private") {
       valu = "Public";
@@ -142,9 +143,8 @@ if (isset($_SESSION['username']) &&
     },
     function(data, status){
       if (status == "success") {
-        $(current).parent().parent().children(".status").text(valu);
-        $(current).parent().parent().children(".action_btn").children("a").text(btext);
-       
+        $card.find('.status').text(valu);
+        $card.find('.action_btn button').text(btext);
       }
 
     });
