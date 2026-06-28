@@ -62,7 +62,7 @@ if (isset($_SESSION['username']) &&
         $current_topic_index++;
         if ((int)$topic['topic_id'] === (int)$_topic_id) {
             $progress_plus = $topic_val * $current_topic_index;
-            if ($progress_plus != $progress && ($progress_plus > $progress || $progress >= 100)) {
+            if ($progress_plus > $progress) {
                 updateStudentProgress($course_id, $student_id, $progress_plus);
                 $progress = $progress_plus;
             }
