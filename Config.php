@@ -1,4 +1,4 @@
 <?php 
 
-define("SITE_NAME", "EduPulse");
+define("SITE_NAME", "EduWave");
  ?>

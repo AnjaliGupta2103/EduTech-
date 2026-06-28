@@ -62,7 +62,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['instructor_id'])) {
 
     $back_url = 'Course-edit.php?course_id=' . $course_id;
     $success_message = isset($_GET['success']) ? Validation::clean($_GET['success']) : '';
-    $title = "EduPulse - Update Content";
+    $title = "EduWave - Update Content";
     include "inc/Header.php";
 ?>
 <div class="container">
@@ -201,3 +201,4 @@ if (isset($_SESSION['username']) && isset($_SESSION['instructor_id'])) {
     Util::redirect("../login.php", "error", $em);
 }
 ?>
+

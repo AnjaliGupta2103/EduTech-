@@ -78,3 +78,4 @@ function getCourseDetailById($course_id){
 	return $course;
 }
 
+

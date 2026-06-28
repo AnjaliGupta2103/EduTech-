@@ -21,7 +21,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['instructor_id'])) {
     $course_chapters = is_array($course_structure['chapters']) ? $course_structure['chapters'] : [];
     $course_topics = is_array($course_structure['topics']) ? $course_structure['topics'] : [];
 
-    $title = "EduPulse - Edit Course";
+    $title = "EduWave - Edit Course";
     include "inc/Header.php";
 ?>
 <div class="container">

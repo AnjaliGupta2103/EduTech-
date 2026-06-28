@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>EduPulse - online learning system</title>
+	<title>EduWave - online learning system</title>
 	<link rel="stylesheet" type="text/css" href="assets/css/welcome.css">
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
@@ -11,7 +11,7 @@
     	<header>
     		<h2 class="logo">
 	    		  <img src="assets/img/Logo.png">
-	    	     <span>EduPulse</span>
+	    	     <span>EduWave</span>
 	        </h2>
 	    	<nav>
 	    		<a href="index.php" class="active">Home</a>
@@ -23,7 +23,7 @@
     	</header>
     </section>
     <section class="section-2">
-    	<h1>Welcome to EduPulse</h1>
+    	<h1>Welcome to EduWave</h1>
     	<p>
     	Welcome to our Online Learning System, where knowledge meets accessibility. Our platform is crafted to empower learners, instructors, and administrators with the tools they need for a dynamic and enriching educational experience.
     	</p>
@@ -44,7 +44,7 @@
 
     </section>
     <footer class="main-footer">
-      <h4>RCD2013C - EduPulse&copy;2024</h4>
+      <h4>RCD2013C - EduWave&copy;2024</h4>
     </footer>
 
     <script src="assets/js/jquery-3.5.1.min.js"></script>

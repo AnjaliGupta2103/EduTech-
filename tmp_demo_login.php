@@ -1,5 +1,5 @@
 <?php
-$pdo = new PDO('mysql:host=localhost;dbname=edupulsedb;charset=utf8mb4', 'root', '');
+$pdo = new PDO('mysql:host=localhost;dbname=EduWavedb;charset=utf8mb4', 'root', '');
 $u = 'studentdemo3';
 $p = 'Student@123';
 $hash = password_hash($p, PASSWORD_DEFAULT);
@@ -12,3 +12,4 @@ $data = $row->fetch(PDO::FETCH_ASSOC);
 echo 'stored_user=' . $data['username'] . PHP_EOL;
 echo 'verify=' . (password_verify($p, $data['password']) ? 'ok' : 'fail') . PHP_EOL;
 echo 'hash=' . $data['password'] . PHP_EOL;
+

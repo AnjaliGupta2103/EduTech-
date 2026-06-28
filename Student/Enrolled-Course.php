@@ -12,7 +12,7 @@ if (isset($_SESSION['username']) &&
     $row_count =  $courses[0]['count'];
 
     # Header
-    $title = "EduPulse - Students ";
+    $title = "EduWave - Students ";
     include "inc/Header.php";
     
 ?>

@@ -1,6 +1,6 @@
 <?php 
   # Header
-  $title = "EduPulse - Search result... for 'key word'";
+  $title = "EduWave - Search result... for 'key word'";
   include "inc/Header.php";
 ?>
 <div class="container">

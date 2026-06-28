@@ -14,7 +14,7 @@ if (isset($_SESSION['username']) &&
      Util::redirect("../logout.php", "error", $em);
    }
     # Header
-    $title = "EduPulse - Instructor ";
+    $title = "EduWave - Instructor ";
     include "inc/Header.php";
 
 ?>
@@ -110,3 +110,4 @@ if (isset($_SESSION['username']) &&
 $em = "First login ";
 Util::redirect("../login.php", "error", $em);
 } ?>
+

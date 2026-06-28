@@ -38,3 +38,4 @@ This file tracks the changes made to support three instructor tabs in the admin 
 - Removed the `Add Instructor` button from the `Active` and `Inactive` tabs, keeping it only on the `All` view.
 - Fixed duplicate instructor IDs by assigning unique IDs to rows with `instructor_id=0` and adding `AUTO_INCREMENT` / primary key behavior to the `instructor` table.
 - Updated the admin instructor UI so a blocked/unblocked instructor is removed immediately from the current `Active` or `Inactive` tab.
+

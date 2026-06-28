@@ -61,7 +61,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['instructor_id'])) {
 
   $content = getById($course_id, $selectedChapter['chapter_id'] ?? $chapter_id, $selectedTopic['topic_id'] ?? $topic_id)['content'];
 
-  $title = $course['title'] . " - EduPulse";
+  $title = $course['title'] . " - EduWave";
   include "inc/Header.php";
 ?>
 <div class="container">

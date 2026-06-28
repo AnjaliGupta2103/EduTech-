@@ -10,7 +10,7 @@ if (isset($_SESSION['username']) &&
     $courses = getCoursesByInstructorId($instructor_id);
 
     # Header
-    $title = "EduPulse - Create Course ";
+    $title = "EduWave - Create Course ";
     include "inc/Header.php";
     
     $title = $description  ="";

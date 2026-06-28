@@ -61,3 +61,4 @@ if (isset($_SESSION['username']) && isset($_SESSION['instructor_id'])) {
     $em = "First login ";
     Util::redirect("../../login.php", "error", $em);
 }
+

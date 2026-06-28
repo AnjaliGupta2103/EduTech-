@@ -11,7 +11,7 @@ session_destroy();
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Logged Out - <?php echo isset($_GET['SITE_NAME']) ? 'EduPulse' : 'System'; ?></title>
+	<title>Logged Out - <?php echo isset($_GET['SITE_NAME']) ? 'EduWave' : 'System'; ?></title>
 	<style>
 		* {
 			margin: 0;
@@ -124,7 +124,7 @@ session_destroy();
 	<h1>See you soon!</h1>
 	<p class="logout-message">
 		You have been successfully logged out from your account. <br>
-		Thank you for using EduPulse.
+		Thank you for using EduWave.
 	</p>
 	
 	<div class="logout-actions">

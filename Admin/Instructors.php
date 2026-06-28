@@ -37,7 +37,7 @@ if (isset($_SESSION['username']) &&
     $end_record = min($offset + $row_num, $row_count);
     $instructors = getSomeInstructors($offset, $row_num, $current_status);
     # Header
-    $title = "EduPulse - Instructors";
+    $title = "EduWave - Instructors";
     include "inc/Header.php";
     
 ?>

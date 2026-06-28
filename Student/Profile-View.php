@@ -26,7 +26,7 @@ if (isset($_SESSION['username']) &&
    if (!empty($certificates)) $profileCompletion += 20;
    $profileCompletion = min($profileCompletion, 100);
     # Header
-    $title = "EduPulse - Students ";
+    $title = "EduWave - Students ";
     include "inc/Header.php";
 
 ?>
@@ -167,3 +167,4 @@ if (isset($_SESSION['username']) &&
 $em = "First login ";
 Util::redirect("../login.php", "error", $em);
 } ?>
+

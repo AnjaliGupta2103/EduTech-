@@ -5,7 +5,7 @@ include "../Utils/Validation.php";
 if (isset($_SESSION['username']) &&
     isset($_SESSION['admin_id'])) {
 
-  $title = "EduPulse - Add Instructor ";
+  $title = "EduWave - Add Instructor ";
   include "inc/Header.php";
 
     $fname = $uname = $email =$bd = $lname ="";

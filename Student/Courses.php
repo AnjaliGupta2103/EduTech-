@@ -23,7 +23,7 @@ if (isset($_SESSION['username']) &&
     $courses = getSomeCourses($offset, $row_num);
 
     # Header
-    $title = "EduPulse - Students ";
+    $title = "EduWave - Students ";
     include "inc/Header.php";
 
 ?>

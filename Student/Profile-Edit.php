@@ -15,7 +15,7 @@ if (isset($_SESSION['username']) &&
    }
    // get Certificates
     # Header
-    $title = "EduPulse - Students ";
+    $title = "EduWave - Students ";
     include "inc/Header.php";
 
 ?>
@@ -107,3 +107,4 @@ if (isset($_SESSION['username']) &&
 $em = "First login ";
 Util::redirect("../login.php", "error", $em);
 } ?>
+

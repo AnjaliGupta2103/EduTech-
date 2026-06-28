@@ -26,7 +26,7 @@ if (isset($_SESSION['username']) &&
     $statusCounts = json_encode(array_map(function($row){ return (int)$row['total']; }, $course_status_counts));
     
     # Header 
-    $title = "EduPulse - System Analysis ";
+    $title = "EduWave - System Analysis ";
     include "inc/Header.php";
 ?>
 <div class="container">

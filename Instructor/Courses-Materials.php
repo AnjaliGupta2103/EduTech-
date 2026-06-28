@@ -24,7 +24,7 @@ if (isset($_SESSION['username']) &&
     if($page != 1) $offset = ($page-1) * $row_num;
     $CoursesMaterials = getSomeCoursesMaterialsByInstructorId($offset, $row_num, $instructor_id);
     # Header
-    $title = "EduPulse - Courses Materials ";
+    $title = "EduWave - Courses Materials ";
     include "inc/Header.php";
 
 ?>

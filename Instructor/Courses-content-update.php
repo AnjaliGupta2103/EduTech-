@@ -23,7 +23,7 @@ if (isset($_SESSION['username']) &&
     $content_id = $content_array[0];
 
     # Header
-    $title = "EduPulse - Create Course ";
+    $title = "EduWave - Create Course ";
     include "inc/Header.php";
     $course = getById($cou_id, $chapter_id, $topic_id);
         // $data = array('content'  => $content,

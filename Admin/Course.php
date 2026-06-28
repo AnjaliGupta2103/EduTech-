@@ -53,7 +53,7 @@ if (isset($_SESSION['username']) &&
      $num_topic = 0;
 
     # Header
-    $title = "EduPulse - ". $course['course']["title"];
+    $title = "EduWave - ". $course['course']["title"];
     include "inc/Header.php";
     
 ?>

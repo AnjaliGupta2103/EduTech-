@@ -10,7 +10,7 @@ include "../Utils/Util.php";
 
 // Util::redirect("Courses.php", "", "");
   # Header
-  $title = "EduPulse - Certificate Request ";
+  $title = "EduWave - Certificate Request ";
   include "inc/Header.php";
 ?>
 

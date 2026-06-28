@@ -1,6 +1,6 @@
 <?php 
   # Header
-  $title = "Edit Profile - EduPulse";
+  $title = "Edit Profile - EduWave";
   include "inc/Header.php";
 
   $type = $_GET['for'];
@@ -64,3 +64,4 @@
 
  <!-- Footer -->
 <?php include "inc/Footer.php"; ?>
+

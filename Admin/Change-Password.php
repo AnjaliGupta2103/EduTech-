@@ -1,6 +1,6 @@
 <?php 
   # Header
-  $title = "Edit Profile - EduPulse";
+  $title = "Edit Profile - EduWave";
   include "inc/Header.php";
 ?>
 <div class="container">
@@ -51,3 +51,4 @@
 
  <!-- Footer -->
 <?php include "inc/Footer.php"; ?>
+

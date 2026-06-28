@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `edupulsedb`
+-- Database: `EduWavedb`
 --
 
 -- --------------------------------------------------------
@@ -40,7 +40,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`admin_id`, `full_name`, `email`, `username`, `password`) VALUES
-(56125, 'System Admin', 'admin@edupulse.com', 'admin', '$2y$10$duWMWfZXM0dqyiKGuMHJee3pzlxkxbCzLtnyV9rSZqC/kclhabFq6');
+(56125, 'System Admin', 'admin@EduWave.com', 'admin', '$2y$10$duWMWfZXM0dqyiKGuMHJee3pzlxkxbCzLtnyV9rSZqC/kclhabFq6');
 
 -- --------------------------------------------------------
 
@@ -243,10 +243,10 @@ CREATE TABLE `instructor` (
 --
 
 INSERT INTO `instructor` (`instructor_id`, `username`, `password`, `first_name`, `last_name`, `email`, `date_of_birth`, `date_of_joined`, `status`, `profile_img`) VALUES
-(1, 'elias17', '$2y$10$KisOzDSecV5ilUfh4OqyGuXqWb./vzA3EHQ0tZynd0E7sjaqEZWXe', 'Elias', 'Yasin', 'eliasyasin@edupulsedb.com', '1998-07-05', '2024-01-15', 'Not Active', 'elias1765bd4ccc51b252.02996728.jpg'),
+(1, 'elias17', '$2y$10$KisOzDSecV5ilUfh4OqyGuXqWb./vzA3EHQ0tZynd0E7sjaqEZWXe', 'Elias', 'Yasin', 'eliasyasin@EduWavedb.com', '1998-07-05', '2024-01-15', 'Not Active', 'elias1765bd4ccc51b252.02996728.jpg'),
 (2, 'Eliasu7n', '$2y$10$7aqpJf4c5eiYKB5qypLxwenoVK8j3AbVBSxjTV/c7LmtnLLq6lAr.', 'Test name', 'test Last', 'john@jo.com', '2024-01-11', '0000-00-00', 'Not Active', 'default.jpg'),
 (3, 'Elias3jk', '$2y$10$HpaKVl0li5/XT0fHMxBsZeXZUSoVmLoIz62kqLHZ3e0.V2F0blFHS', 'Test Instructor', 'Instructor', 'john@jo.com', '2024-01-19', '0000-00-00', 'Not Active', 'default.jpg'),
-(4, 'demo_instructor', '$2y$10$jLoPl4G9qGzSS9BjFX.r/egOL/fIfAgYldfoTHVtprPh2zSYdhM22', 'Demo', 'Instructor', 'demo.instructor@edupulse.com', '1995-01-15', '2026-06-21', 'Active', 'demo_instructor6a3aae403c6cc0.52527356.png');
+(4, 'demo_instructor', '$2y$10$jLoPl4G9qGzSS9BjFX.r/egOL/fIfAgYldfoTHVtprPh2zSYdhM22', 'Demo', 'Instructor', 'demo.instructor@EduWave.com', '1995-01-15', '2026-06-21', 'Active', 'demo_instructor6a3aae403c6cc0.52527356.png');
 
 -- --------------------------------------------------------
 
@@ -581,3 +581,4 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+

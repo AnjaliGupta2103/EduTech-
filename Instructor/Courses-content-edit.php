@@ -40,7 +40,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['instructor_id'])) {
         }
     }
 
-    $title = "EduPulse - Edit Content";
+    $title = "EduWave - Edit Content";
     include "inc/Header.php";
 ?>
 <div class="container">
@@ -133,3 +133,4 @@ if (isset($_SESSION['username']) && isset($_SESSION['instructor_id'])) {
     Util::redirect("../login.php", "error", $em);
 }
 ?>
+

@@ -31,3 +31,4 @@ function getEnrolledCourses($stud_id){
 	}
 	return $newData;
 }
+

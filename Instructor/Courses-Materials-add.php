@@ -6,7 +6,7 @@ if (isset($_SESSION['username']) &&
     isset($_SESSION['instructor_id'])) {
 
 
-  $title = "EduPulse - Upload Courses Materials ";
+  $title = "EduWave - Upload Courses Materials ";
   include "inc/Header.php";
 ?>
 <div class="container">

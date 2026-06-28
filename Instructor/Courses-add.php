@@ -10,7 +10,7 @@ if (isset($_SESSION['username']) &&
     $courses = getCoursesByInstructorId($instructor_id);
 
     # Header
-    $title = "EduPulse - Create Course ";
+    $title = "EduWave - Create Course ";
     include "inc/Header.php";
     
     $title = $description  ="";
@@ -205,3 +205,4 @@ if (isset($_SESSION['username']) &&
 $em = "First login ";
 Util::redirect("../login.php", "error", $em);
 } ?>
+

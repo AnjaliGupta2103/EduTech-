@@ -16,7 +16,7 @@ if (isset($_SESSION['username']) &&
    // get Certificates
    $certificates = getCertificate($_id);
     # Header 
-    $title = "EduPulse - Student ";
+    $title = "EduWave - Student ";
     include "inc/Header.php";
 ?>
 

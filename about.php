@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>About - EduPulse</title>
+	<title>About - EduWave</title>
 	<link rel="stylesheet" type="text/css" href="assets/css/welcome.css">
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
@@ -11,7 +11,7 @@
     	<header>
     		<h2 class="logo">
     		  <img src="assets/img/Logo.png">
-    	     <span>EduPulse</span>
+    	     <span>EduWave</span>
         </h2>
 	    	<nav>
 	    		<a href="index.php">Home</a>
@@ -28,7 +28,7 @@
     	<h1 style="text-align: center;">
 
     		<img src="assets/img/Logo.png"><br>
-    		EduPulse 
+    		EduWave 
     	</h1>
     	<p>
     	The online learning system website aims to provide a user-friendly and accessible platform for learners, instructors, and administrators. The system is designed to facilitate seamless interaction, efficient course management, and a rich learning experience. The website incorporates the following versions:
@@ -50,7 +50,7 @@
     </section>
      
     <footer class="main-footer">
-      <h4>RCD2013C - EduPulse&copy;2024</h4>
+      <h4>RCD2013C - EduWave&copy;2024</h4>
     </footer>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 

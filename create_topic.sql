@@ -5,3 +5,4 @@ CREATE TABLE IF NOT EXISTS topic (
   title varchar(1023) NOT NULL,
   created_at DATE NOT NULL DEFAULT CURDATE()
 );
+
