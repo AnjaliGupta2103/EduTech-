@@ -7,44 +7,63 @@
 </head>
 <body>
     <section class="section-1 home-p">
-    	<div class="overl">.</div>
-    	<header>
-    		<h2 class="logo">
-	    		  <img src="assets/img/Logo.png">
-	    	     <span>EduWave</span>
+     	<div class="overl"></div>
+     	<header>
+     		<h2 class="logo">
+		  	  <img src="assets/img/Logo.png" alt="EduWave logo">
+		     <span>EduWave</span>
 	        </h2>
-	    	<nav>
-	    		<a href="index.php" class="active">Home</a>
-	    		<a href="about.php">About</a>
-	    		<a href="signup.php">Sign Up</a>
-	    		<a href="login.php">Login</a>
-	    		
-	    	</nav>
-    	</header>
+	     	<nav>
+	     		<a href="index.php" class="active">Home</a>
+	     		<a href="about.php">About</a>
+	     		<a href="signup.php">Sign Up</a>
+	     		<a href="login.php">Login</a>
+	     	</nav>
+     	</header>
+        <div class="hero-content">
+          <div class="hero-copy">
+            <p class="eyebrow">Welcome to EduWave</p>
+            <h1>Hi there! Start your learning journey today.</h1>
+            <p class="hero-text">A simple, role-based learning system for Students, Instructors, and Admins. Discover courses, create content, and manage the platform from one shared application.</p>
+          </div>
+        </div>
     </section>
     <section class="section-2">
-    	<h1>Welcome to EduWave</h1>
-    	<p>
-    	Welcome to our Online Learning System, where knowledge meets accessibility. Our platform is crafted to empower learners, instructors, and administrators with the tools they need for a dynamic and enriching educational experience.
-    	</p>
-    	<h1>For Learners:</h1>
-    	<p>
-    		Embark on your learning journey with ease. Browse through a diverse range of courses, enroll effortlessly, and track your progress in real-time. Engage with fellow learners through discussion forums, share insights, and earn certificates as a testament to your accomplishments.
-    	</p>
-    	<h1>For Instructors:</h1>
-    	<p>
-    		Shape the future of education by creating captivating courses. Our instructor version provides an intuitive environment for content creation, quiz management, and grading. Stay connected with your students through forums, monitor their progress, and witness the impact of your expertise.
-
-    		
-    	</p>
-    	<p>
-    		At the heart of our platform is a commitment to fostering a collaborative and interactive learning experience. Join us on this educational adventure, where knowledge knows no bounds. Welcome to a world of learning at your fingertips.
-    	</p>
-
-
+      <div class="section-intro">
+        <h2>Built for every role in the learning ecosystem</h2>
+        <p>EduWave connects Students, Instructors, and Admins on a single platform for course creation, enrollment, and management.</p>
+      </div>
+      <div class="info-cards">
+        <article class="info-card">
+          <h3>Goal</h3>
+          <p>Provide a shared learning platform where students can enroll and learn, instructors can build courses, and admins can oversee the platform.</p>
+        </article>
+        <article class="info-card">
+          <h3>What it does</h3>
+          <p>Offers role-based dashboards, course management, enrollment workflows, content creation, and user management with session-based authentication.</p>
+        </article>
+      </div>
+      <div class="role-cards">
+        <article class="role-card">
+          <h3>Student</h3>
+          <p>Browse available courses, enroll instantly, and continue learning with progress tracking and course access.</p>
+        </article>
+        <article class="role-card">
+          <h3>Instructor</h3>
+          <p>Create courses, add chapters and content, and manage your teaching materials from a single dashboard.</p>
+        </article>
+        <article class="role-card">
+          <h3>Admin</h3>
+          <p>Manage users, instructors, and course visibility so the platform stays organized and secure.</p>
+        </article>
+      </div>
+      <div class="feature-text">
+        <h2>Why EduWave?</h2>
+        <p>EduWave is designed for simplicity and clarity. It uses PHP, MySQL, and server-side session-based authentication to deliver a straightforward learning platform that works for all roles.</p>
+      </div>
     </section>
     <footer class="main-footer">
-      <h4>RCD2013C - EduWave&copy;2024</h4>
+      <h4>RCD2013C - EduWave &copy;2026</h4>
     </footer>
 
     <script src="assets/js/jquery-3.5.1.min.js"></script>
